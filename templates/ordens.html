@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Abrir Ordem de Serviço — Ordens de Serviço{% endblock %}
+{% block content %}
+<section class="card">
+  <h1>Abrir Ordem de Serviço</h1>
+  <form class="form" method="post" action="{{ url_for('ordens') }}">
+    <div class="form-row">
+      <label for="cultivar_id">Cultivar (semente)</label>
+      <select id="cultivar_id" name="cultivar_id" required>
+        <option value="">Selecione...</option>
+        {% for c in cultivares %}
+          <option value="{{ c.id }}">{{ c.nome }}{% if c.especie %} - {{ c.especie }}{% endif %}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="quantidade">Número de sementes</label>
+      <input type="number" id="quantidade" name="quantidade" min="1" required />
+    </div>
+    
+
+    <div class="form-row">
+  <label for="observacoes">Observações</label>
+  <textarea 
+    id="observacoes" 
+    name="observacoes" 
+    rows="3"
+    style="
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+      /* BORDAS FIXAS - mais simples */
+      border: 2.75px solid #CC6600;
+      background-color: transparent;
+    "
+    onfocus="
+      this.style.outline = 'none';
+      this.style.boxShadow = '0 0 0 2px rgba(204, 102, 0, 0.3)';
+    "
+    onblur="
+      this.style.boxShadow = 'none';
+    "
+  ></textarea>
+  <!-- Script para ajustar borda conforme tema -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const textarea = document.getElementById('observacoes');
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.attributeName === 'class') {
+            if (document.body.classList.contains('dark-mode')) {
+              textarea.style.borderColor = '#ddd9ce';
+            } else {
+              textarea.style.borderColor = '#CC6600';
+            }
+          }
+        });
+      });
+      
+      observer.observe(document.body, { attributes: true });
+      
+      // Define cor inicial
+      if (document.body.classList.contains('dark-mode')) {
+        textarea.style.borderColor = '#ddd9ce';
+      }
+    });
+  </script>
+</div>
+
+    <div class="form-row">
+      <label for="data_entrega">Data de entrega</label>
+      <input type="date" id="data_entrega" name="data_entrega" />
+    </div>
+    <div class="form-row">
+    <label for="sla">SLA (Urgência Pela Conclusão)</label>
+    <select id="sla" name="sla">
+        <option value="">Selecione...</option>
+        <option value="muito_baixo">Muito Baixo</option>
+        <option value="baixo">Baixo</option>
+        <option value="medio">Médio</option>
+        <option value="alto">Alto</option>
+        <option value="muito_alto">Muito Alto</option>
+    </select>
+</div>
+    <div class="form-actions">
+      <button type="submit" class="button">Abrir Ordem</button>
+      <a class="button secondary" href="{{ url_for('ordens_minhas') }}">Ver Minhas Ordens</a>
+    </div>
+  </form>
+  <p class="muted">Informe os dados e clique em Abrir Ordem.</p>
+</section>
+{% endblock %}

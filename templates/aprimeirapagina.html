@@ -1,0 +1,1588 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tela Inicial - HOO System</title>
+    
+    <!-- Carregar Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* CORES DO PROJETO: */
+            --mana:#F0FFF0; /*Tonalidade: Maná*/ /*cor dos cards no tema claro*/
+            --pardo:#CC6600; /*Tonalidade: Pardo-Escuro*/ /*cor de bordas e fontes no tema claro*/
+            --turquesa:#9fe3dd; /*Tonalidade: Turquesa Claro*/  /*cor predominante do fundo no tema claro*/
+            --verde:#CCFF33; /*Tonalidade: Verde-Fluorescente*/ /*cor dos botões no tema claro, cor do hover no tema escuro*/
+
+            --azul:#1D3E5E; /*Tonalidade: Azul-Marinho-Escuro-*/ /*cor dos cards no tema escuro*/
+            --bege:#ddd9ce; /*Tonalidade: Bege-Claro*/ /*cor de bordas e fontes no tema escuro*/
+            --preto:#0A1A2F; /*Tonalidade: Preto-Azulado*/ /*cor predominante do fundo no tema escuro*/
+            --roxo: #8e44ad;/*Tonalidade: Roxo*/ /*cor dos botões no tema escuro, a cor do hover no tema claro*/
+
+            /* CORES ADICIONAIS PARA ESTADOS */
+            --branco: #ffffff;
+            --laranja: #ff6b35;
+
+            /* TEMA CLARO (PADRÃO) */
+            --bg: var(--turquesa);
+            --panel: var(--mana);
+            --text: var(--pardo);
+            --muted: var(--pardo);
+            --primary: var(--verde);
+            --border: var(--pardo);
+            --hover: var(--roxo);
+            --hover-text: var(--pardo);
+
+            --brightness: 100%;
+            --font-base: 17.5px; /* Tamanho base alterável - usado em body */
+        }
+
+        /* TEMA ESCURO */
+        body.dark-mode {
+            --bg: var(--preto);
+            --panel: var(--azul);
+            --text: var(--bege);
+            --muted: var(--bege);
+            --primary: var(--roxo);
+            --border: var(--bege);
+            --hover: var(--verde);
+            --hover-text: var(--bege);
+        }
+
+        body.dark-mode .primary:hover {
+            color: var(--pardo);
+        }
+
+        /* RESET */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            transition: background 0.3s, color 0.3s, filter 0.3s;
+            filter: brightness(var(--brightness));
+            font-size: var(--font-base);
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* BUTTONS */
+        .button {
+            display: inline-block;
+            padding: 0.571em 0.8em;
+            border-radius: 6px;
+            background: var(--primary);
+            color: var(--text);
+            font-weight: 600;
+            border: 2.75px solid var(--border);
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
+
+        .button:hover {
+            background: var(--hover);
+            color: var(--hover-text);
+        }
+
+        /* ------------------------------------------------------------- */
+        /*                     BOTÃO DE CONFIGURAÇÕES                    */
+        /* ------------------------------------------------------------- */
+
+        .settings-btn {
+            position: fixed;
+            top: 12px;
+            right: 7px;
+            background-color: var(--primary);
+            border: 2.75px solid var(--border);
+            border-radius: 8px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 1001;
+        }
+
+        .settings-btn:hover {
+            transform: scale(1.1) rotate(30deg);
+            background-color: var(--hover);
+        }
+
+        .settings-btn i {
+            font-size: 28px;
+            color: var(--text);
+        }
+
+        /* ------------------------------------------------------------- */
+        /*                     BOTÃO DE RECLAMAÇÕES                      */
+        /* ------------------------------------------------------------- */
+        .feedback-btn {
+            position: fixed;
+            top: 12px;
+            right: 70px;
+            background-color: var(--primary);
+            border: 2.75px solid var(--border);
+            border-radius: 8px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 1001;
+        }
+
+        .feedback-btn:hover {
+            transform: scale(1.1) rotate(-15deg);
+            background-color: var(--hover);
+        }
+
+        .feedback-btn i {
+            font-size: 26px;
+            color: var(--text);
+        }
+
+        /* ------------------------------------------------------------- */
+        /*                     BOTÃO "SOBRE NÓS"                         */
+        /* ------------------------------------------------------------- */
+        .info-icon-container {
+            position: fixed;
+            top: 1150px;
+            left: 40px;
+            z-index: 1002;
+        }
+
+        .info-icon {
+            background: var(--primary);
+            color: var(--text);
+            border: 2.75px solid var(--border);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .info-icon:hover {
+            transform: scale(1.1);
+            background: var(--hover);
+        }
+
+        /* Tema Claro - Hover dos botões */
+        body:not(.dark-mode) .info-icon:hover,
+        body:not(.dark-mode) .feedback-btn:hover {
+            background: var(--roxo);
+            color: var(--branco);
+        }
+
+        /* Tema Escuro - Hover dos botões */
+        body.dark-mode .info-icon:hover,
+        body.dark-mode .feedback-btn:hover {
+            background: var(--verde);
+            color: var(--preto);
+        }
+
+        /* ------------------------------------------------------------- */
+        /*                     PAINEL DE RECLAMAÇÕES                     */
+        /* ------------------------------------------------------------- */
+        .feedback-panel {
+            position: fixed;
+            top: 110px;
+            right: 30px;
+            background-color: var(--panel);
+            border: 2.75px solid var(--border);
+            color: var(--text);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            padding: 25px;
+            width: 400px;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .feedback-panel.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(0);
+        }
+
+        .feedback-panel h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        /* FORMULÁRIO DE RECLAMAÇÃO */
+        .feedback-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2.75px solid var(--border);
+            border-radius: 6px;
+            background: var(--panel);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group select {
+            cursor: pointer;
+        }
+
+        /* BOTÕES DO FORMULÁRIO */
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .form-buttons button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-submit {
+            background: var(--primary);
+            color: var(--text);
+            border: 2.75px solid var(--border) !important;
+        }
+
+        .btn-cancel {
+            background: var(--panel);
+            color: var(--text);
+            border: 2.75px solid var(--border) !important;
+        }
+
+        .btn-submit:hover {
+            background: var(--hover);
+            color: var(--hover-text);
+        }
+
+        .btn-cancel:hover {
+            background: var(--hover);
+            color: var(--hover-text);
+        }
+
+        /* MENSAGEM DE STATUS */
+        .status-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .status-success {
+            background: rgba(72, 187, 120, 0.2);
+            border: 1px solid #48bb78;
+            color: #48bb78;
+        }
+
+        .status-error {
+            background: rgba(245, 101, 101, 0.2);
+            border: 1px solid #f56565;
+            color: #f56565;
+        }
+
+        /* LOADING SPINNER */
+        .loading-spinner {
+            display: none;
+            border: 3px solid rgba(0,0,0,0.1);
+            border-radius: 50%;
+            border-top: 3px solid var(--primary);
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* MODAL PERSONALIZADO PARA "SOBRE NÓS" */
+        .about-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .about-modal {
+            background-color: var(--panel);
+            border: 2.75px solid var(--border);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: modalFadeIn 0.3s ease;
+            color: var(--text);
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .about-modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--primary);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .about-modal-header h3 {
+            margin: 0;
+            color: var(--text);
+            font-size: 1.4em;
+        }
+
+        .close-about-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-about-btn:hover {
+            background-color: rgba(0,0,0,0.1);
+            transform: rotate(90deg);
+        }
+
+        .about-modal-body {
+            padding: 20px;
+        }
+
+        /* ------------------------------------------------------------- */
+        /*                     PAINEL DE CONFIGURAÇÕES                   */
+        /* ------------------------------------------------------------- */
+        .theme-settings {
+            position: fixed;
+            top: 110px;
+            right: 30px;
+            background-color: var(--panel);
+            border: 2.75px solid var(--border);
+            color: var(--text);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            padding: 25px;
+            width: 350px;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .theme-settings.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(0);
+        }
+
+        .theme-settings h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        /* MODOS DE TEMA */
+        .mode-options {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 10px;
+            margin-bottom: 25px;
+        }
+
+        .mode-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn.light {
+            background: var(--turquesa);
+            border-color: var(--pardo);
+        }
+
+        .mode-btn.dark {
+            background: var(--preto);
+            border-color: var(--bege);
+        }
+
+        .mode-btn:hover, .mode-btn.active {
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        /* CONTROLE DE BRILHO */
+        .brightness-control {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border);
+        }
+
+        .brightness-control h5 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .brightness-slider-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .brightness-btn {
+            background: var(--primary);
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            color: var(--text);
+        }
+
+        .brightness-btn:hover {
+            background: var(--hover);
+            transform: scale(1.1);
+        }
+
+        .brightness-slider {
+            flex: 1;
+            height: 8px;
+            background: var(--panel);
+            border: 2px solid var(--border);
+            border-radius: 4px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .brightness-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            background: var(--primary);
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .brightness-slider::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            background: var(--primary);
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .brightness-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .brightness-icon {
+            font-size: 1rem;
+        }
+
+        /* CONTROLE DE FONTE */
+        .font-control {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border);
+        }
+
+        .font-control h5 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .font-control-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .font-btn {
+            background: var(--primary);
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+            color: var(--text);
+        }
+
+        .font-btn:hover {
+            background: var(--hover);
+            transform: scale(1.1);
+        }
+
+        .font-value {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .font-icon {
+            font-size: 1rem;
+        }
+
+        /* AJUSTES ESPECÍFICOS PARA CORRESPONDÊNCIA ENTRE TEMAS */
+
+        /* Tema Claro - Hovers específicos */
+        body:not(.dark-mode) .button:hover {
+            background: var(--roxo);
+            color: var(--branco);
+        }
+
+        body:not(.dark-mode) .settings-btn:hover,
+        body:not(.dark-mode) .feedback-btn:hover {
+            background-color: var(--roxo);
+        }
+
+        body:not(.dark-mode) .btn-submit:hover,
+        body:not(.dark-mode) .btn-cancel:hover {
+            background: var(--roxo);
+            color: var(--branco);
+        }
+
+        body:not(.dark-mode) .brightness-btn:hover,
+        body:not(.dark-mode) .font-btn:hover {
+            background: var(--roxo);
+        }
+
+        /* Tema Escuro - Hovers específicos */
+        body.dark-mode .button:hover {
+            background: var(--verde);
+            color: var(--preto);
+        }
+
+        body.dark-mode .settings-btn:hover,
+        body.dark-mode .feedback-btn:hover {
+            background-color: var(--verde);
+        }
+
+        body.dark-mode .btn-submit:hover,
+        body.dark-mode .btn-cancel:hover {
+            background: var(--verde);
+            color: var(--preto);
+        }
+
+        body.dark-mode .brightness-btn:hover,
+        body.dark-mode .font-btn:hover {
+            background: var(--verde);
+        }
+
+        /* ============================================= */
+        /* ESTILOS ESPECÍFICOS DA PÁGINA INICIAL */
+        /* ============================================= */
+        
+        body.pagina-inicial {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .title-1 {
+            font-size: 68px;
+            font-weight: bold;
+            margin: 0;
+            line-height: 60px;
+            color: var(--text);
+        }
+
+        .subtitle {
+            font-size: 20px;
+            margin-top: 10px;
+            color: var(--text);
+        }
+
+        .helper {
+            font-size: 18px;
+            margin-top: 5px;
+            margin-bottom: 30px;
+            color: var(--muted);
+        }
+
+        .main-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 22px;
+            border-radius: 10px;
+            background: var(--primary);
+            color: var(--text);
+            font-weight: 600;
+            border: 2.75px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .main-btn:hover {
+            background: var(--hover);
+            color: var(--hover-text);
+            transform: scale(1.05);
+        }
+
+        body:not(.dark-mode) .main-btn:hover {
+            background: var(--roxo);
+            color: var(--branco);
+        }
+
+        body.dark-mode .main-btn:hover {
+            background: var(--verde);
+            color: var(--preto);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1500;
+        }
+
+        .modal {
+            background: var(--panel);
+            border: 2.75px solid var(--border);
+            color: var(--text);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            width: 300px;
+            animation: fadeIn 0.25s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1501;
+            font-size: 1em;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        .modal h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            margin: 10px 0;
+            border: 2.75px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+            font-weight: 600;
+            background: var(--primary);
+            color: var(--text);
+        }
+
+        .option-btn:hover {
+            background: var(--hover);
+            color: var(--hover-text);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        body:not(.dark-mode) .option-btn:hover {
+            background: var(--roxo);
+            color: var(--branco);
+        }
+
+        body.dark-mode .option-btn:hover {
+            background: var(--verde);
+            color: var(--preto);
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            font-size: 50px;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .title-1 {
+                font-size: 48px;
+            }
+            .main-btn {
+                padding: 12px 30px;
+                font-size: 18px;
+            }
+            .modal {
+                width: 90%;
+                max-width: 300px;
+            }
+            .theme-settings {
+                width: 90%;
+                max-width: 300px;
+                right: 5%;
+                padding: 20px;
+            }
+            .feedback-panel {
+                width: 90%;
+                max-width: 350px;
+                right: 5%;
+                padding: 20px;
+            }
+            .info-icon-container {
+                top: 15px;
+                left: 15px;
+            }
+            .info-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+            .about-modal {
+                width: 95%;
+                max-height: 85vh;
+            }
+            .settings-btn {
+                top: 12px;
+                right: 7px;
+            }
+            .feedback-btn {
+                top: 12px;
+                right: 70px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .settings-btn {
+                top: 10px;
+                right: 5px;
+                width: 45px;
+                height: 45px;
+            }
+            .feedback-btn {
+                top: 10px;
+                right: 60px;
+                width: 45px;
+                height: 45px;
+            }
+            .feedback-btn i,
+            .settings-btn i {
+                font-size: 24px;
+            }
+            .mode-btn {
+                width: 30px;
+                height: 30px;
+            }
+            .brightness-btn,
+            .font-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="pagina-inicial">
+
+    <!-- Botão de Reclamações/Sugestões -->
+    <button class="feedback-btn" id="feedbackToggle" title="Enviar Reclamação/Sugestão">
+        <i class="fas fa-comment-alt"></i>
+    </button>
+
+    <!-- Botão "Sobre Nós" -->
+    <div class="info-icon-container">
+        <button type="button" class="info-icon" id="openAboutBtn">
+            <i class="fas fa-info"></i>
+        </button>
+    </div>
+
+    <!-- Modal "Sobre Nós" Personalizado -->
+    <div class="about-overlay" id="aboutOverlay">
+        <div class="about-modal">
+            <div class="about-modal-header">
+                <h3>AgroMail - Quem Somos</h3>
+                <button class="close-about-btn" id="closeAboutBtn">&times;</button>
+            </div>
+            <div class="about-modal-body">
+                
+                <!-- Seção 1: Introdução -->
+                <div class="section-title">Nossa História</div>
+                <p>Fundada em 2025, a AgroMail nasceu da visão de transformar o agronegócio brasileiro através da tecnologia. Começamos recentemente como uma ainda pequena startup no em Rondonnpólis e hoje atendemos produtores rurais em todo o território estadual.</p>
+                
+                <div class="highlight">
+                    <strong>Missão:</strong> Sermos os pioneiros no campo do uso de tecnologias diretamente ligadas a ordens de serviço, oferecendo soluções simples, porém robustas, dinamicas que buscam inovar no aumento de produtividade e sustentabilidade no agronegócio.
+                </div>
+                
+                <hr class="divider">
+                
+                <!-- Seção 2: Valores -->
+                <div class="section-title">Nossos Valores</div>
+                <ul class="feature-list">
+                    <li><strong>Inovação:</strong> Buscamos constantemente novas tecnologias para o campo</li>
+                    <li><strong>Qualidade:</strong> Excelência em nossos produtos e serviços</li>
+                    <li><strong>Transparência:</strong> Relacionamento claro e honesto com clientes</li>
+                    <li><strong>Compromisso:</strong> Cumprimos rigorosamente nossos prazos</li>
+                    <li><strong>Sustentabilidade:</strong> Soluções que respeitam o meio ambiente</li>
+                    <li><strong>Parceria:</strong> Crescemos junto com nossos clientes</li>
+                </ul>
+                
+                <hr class="divider">
+                
+                <!-- Seção 4: Diferenciais -->
+                <div class="section-title">Por que escolher a AgroMail?</div>
+                <p><strong>Especialização:</strong> Somos especialistas em tecnologia para o agronegócio há mais de 10 anos.</p>
+                <p><strong>Suporte:</strong> Equipe técnica disponível 24/7 para emergências no campo.</p>
+                <p><strong>Personalização:</strong> Adaptamos nossas soluções para cada tipo de cultivo e propriedade.</p>
+                
+                <div class="highlight">
+                    <strong>Resultados Comprovados:</strong> Mais de 20 propriedades rurais aumentaram sua produtividade em média 45% utilizando nossa solução.
+                </div>
+                
+                <hr class="divider">
+                
+                <!-- Seção 5: Contato -->
+                <div class="contact-info">
+                    <div class="section-title">Para Mais Contato</div>
+                    <p><i class="fas fa-phone"></i> <strong>Telefone:</strong> (66) 99999-9999</p>
+                    <p><i class="fas fa-envelope"></i> <strong>Email:</strong> contato@agromail.com.br</p>
+                    <p><i class="fas fa-clock"></i> <strong>Horário:</strong> Segunda a Sexta, 8h às 18h</p>
+                    <p><i class="fas fa-map-marker-alt"></i> <strong>Sede:</strong> Av. Lions, 1000 - Rondonópolis/MT</p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão de Configurações -->
+    <button class="settings-btn" id="settingsToggle">
+        <i class="fa-solid fa-gear"></i>
+    </button>
+
+    <!-- TÍTULO -->
+    <div class="logo-container">
+        <div class="logo-icon"></div>
+        <h1 class="title-1">Agromail</h1>
+    </div>
+
+    <p class="subtitle">Seja bem-vindo(a) ao Agromail.</p>
+    <p class="helper">Como podemos te ajudar hoje?</p>
+
+    <!-- Botão central -->
+    <button class="main-btn" id="openMenu">Entrar</button>
+
+    <!-- Modal de Login/Cadastro -->
+    <div class="overlay" id="menuOverlay">
+        <div class="modal">
+            <h2>Selecione uma opção</h2>
+            
+            <!-- Botões com links para as rotas do Flask -->
+            <a href="/login" class="option-btn">
+                Entrar com Conta
+            </a>
+
+            <a href="/signup" class="option-btn">
+                Cadastrar-se
+            </a>
+
+            <button class="option-btn" id="closeMenu">
+                Cancelar
+            </button>
+        </div>
+    </div>
+    
+    <!-- Painel de Reclamações - FORMULÁRIO CORRIGIDO -->
+    <div class="feedback-panel" id="feedbackPanel">
+        <h3>ENVIAR RECLAMAÇÃO/SUGESTÃO</h3>
+        
+        <!-- FORMULÁRIO QUE ENVIA DIRETAMENTE PARA O EMAIL -->
+        <form class="feedback-form" id="feedbackForm">
+            <!-- NÃO USAMOS ACTION EXTERNA - vamos enviar via JavaScript -->
+            
+            <div class="form-group">
+                <label for="feedbackName">Seu Nome:</label>
+                <input type="text" id="feedbackName" name="name" placeholder="Digite seu nome" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="feedbackEmail">Seu Email:</label>
+                <input type="email" id="feedbackEmail" name="email" placeholder="exemplo@email.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="feedbackType">Tipo de Mensagem:</label>
+                <select id="feedbackType" name="type" required>
+                    <option value="" disabled selected>Selecione uma opção</option>
+                    <option value="reclamação">Reclamação</option>
+                    <option value="sugestão">Sugestão</option>
+                    <option value="elogio">Elogio</option>
+                    <option value="problema">Reportar Problema</option>
+                    <option value="duvida">Dúvida</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="feedbackMessage">Mensagem:</label>
+                <textarea id="feedbackMessage" name="message" placeholder="Descreva sua reclamação, sugestão ou feedback..." required></textarea>
+            </div>
+            
+            <!-- Loading spinner -->
+            <div class="loading-spinner" id="loadingSpinner"></div>
+            
+            <div class="form-buttons">
+                <button type="submit" class="btn-submit" id="submitBtn">Enviar Mensagem</button>
+                <button type="button" class="btn-cancel" id="cancelFeedback">Cancelar</button>
+            </div>
+        </form>
+        
+        <div id="statusMessage" class="status-message"></div>
+    </div>
+    
+    <!-- Painel de Configurações -->
+    <div class="theme-settings" id="themePanel">
+        <h3>CONFIGURAÇÕES</h3>
+        
+        <div class="mode-options">
+            <button class="mode-btn light active" id="lightMode"></button>
+            <button class="mode-btn dark" id="darkMode"></button>
+        </div>
+        
+        <div class="brightness-control">
+            <h5>CONTROLE DE BRILHO</h5>
+            <div class="brightness-slider-container">
+                <button class="brightness-btn" id="brightnessDecrease">-</button>
+                <input type="range" min="50" max="150" value="100" class="brightness-slider" id="brightnessSlider">
+                <button class="brightness-btn" id="brightnessIncrease">+</button>
+            </div>
+            <div class="brightness-value">
+                <i class="fas fa-sun brightness-icon"></i>
+                <span id="brightnessValue">Brilho: 100%</span>
+            </div>
+        </div>
+
+        <div class="font-control">
+            <h5>CONTROLE DE FONTE</h5>
+            <div class="font-control-container">
+                <button class="font-btn" id="fontDecrease">A-</button>
+                <button class="font-btn" id="fontIncrease">A+</button>
+            </div>
+            <div class="font-value">
+                <i class="fas fa-font font-icon"></i>
+                <span id="fontValue">Tamanho: 100%</span>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    // ============================================
+    // CONTROLES DO PAINEL DE RECLAMAÇÕES - CORRIGIDO
+    // ============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        const feedbackToggle = document.getElementById("feedbackToggle");
+        const feedbackPanel = document.getElementById("feedbackPanel");
+        const cancelFeedback = document.getElementById("cancelFeedback");
+        const feedbackForm = document.getElementById("feedbackForm");
+        const statusMessage = document.getElementById("statusMessage");
+        const loadingSpinner = document.getElementById("loadingSpinner");
+        const submitBtn = document.getElementById("submitBtn");
+
+        // Abrir/fechar painel de reclamações
+        if (feedbackToggle && feedbackPanel) {
+            feedbackToggle.onclick = (e) => {
+                e.stopPropagation();
+                feedbackPanel.classList.toggle("active");
+                // Fechar outros painéis se estiverem abertos
+                if (themePanel.classList.contains('active')) {
+                    themePanel.classList.remove("active");
+                }
+                // Fechar modais se estiverem abertos
+                if (aboutOverlay.style.display === 'flex') {
+                    aboutOverlay.style.display = 'none';
+                }
+                if (overlay.style.display === 'flex') {
+                    overlay.style.display = 'none';
+                }
+            };
+        }
+
+        // Fechar painel de reclamações
+        if (cancelFeedback) {
+            cancelFeedback.onclick = () => {
+                feedbackPanel.classList.remove("active");
+                resetForm();
+            };
+        }
+
+        // Fechar painel clicando fora
+        document.addEventListener('click', (e) => {
+            if (feedbackPanel.classList.contains('active') && 
+                !feedbackPanel.contains(e.target) && 
+                !feedbackToggle.contains(e.target)) {
+                feedbackPanel.classList.remove("active");
+                resetForm();
+            }
+        });
+
+        // Fechar painel com tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && feedbackPanel.classList.contains('active')) {
+                feedbackPanel.classList.remove("active");
+                resetForm();
+            }
+        });
+
+        // Resetar formulário
+        function resetForm() {
+            if (feedbackForm) {
+                feedbackForm.reset();
+                hideStatusMessage();
+                hideLoading();
+            }
+        }
+
+        // Mostrar loading
+        function showLoading() {
+            if (loadingSpinner) {
+                loadingSpinner.style.display = "block";
+            }
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Enviando...";
+            }
+        }
+
+        // Esconder loading
+        function hideLoading() {
+            if (loadingSpinner) {
+                loadingSpinner.style.display = "none";
+            }
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Enviar Mensagem";
+            }
+        }
+
+        // Mostrar mensagem de status
+        function showStatusMessage(message, type) {
+            if (statusMessage) {
+                statusMessage.textContent = message;
+                statusMessage.className = "status-message status-" + type;
+                statusMessage.style.display = "block";
+                
+                // Rolagem suave para a mensagem
+                statusMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // Esconder mensagem de status
+        function hideStatusMessage() {
+            if (statusMessage) {
+                statusMessage.style.display = "none";
+                statusMessage.textContent = "";
+            }
+        }
+
+        // Processar envio do formulário - VERSÃO CORRIGIDA
+        if (feedbackForm) {
+            feedbackForm.addEventListener('submit', function(e) {
+                // Prevenir envio padrão
+                e.preventDefault();
+                
+                // Coletar dados do formulário
+                const name = document.getElementById('feedbackName').value;
+                const email = document.getElementById('feedbackEmail').value;
+                const type = document.getElementById('feedbackType').value;
+                const message = document.getElementById('feedbackMessage').value;
+
+                // Validação básica
+                if (!name || !email || !type || !message) {
+                    showStatusMessage("Por favor, preencha todos os campos.", "error");
+                    return;
+                }
+
+                // Validar email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showStatusMessage("Por favor, insira um email válido.", "error");
+                    return;
+                }
+
+                // Mostrar loading
+                showLoading();
+                hideStatusMessage();
+
+                // Preparar dados para envio
+                const formData = {
+                    name: name,
+                    email: email,
+                    type: type,
+                    message: message,
+                    timestamp: new Date().toLocaleString('pt-BR'),
+                    // Adicionamos um subject personalizado
+                    subject: `Nova ${type} do AgroMail - ${name}`
+                };
+
+                console.log("📤 Dados da mensagem:", formData);
+                
+                // Mostrar mensagem de sucesso (simulação)
+                showStatusMessage("✅ Preparando sua mensagem...", "success");
+
+                // Simular envio (em produção, você usaria um backend real)
+                setTimeout(() => {
+                    // 1. Primeiro simulamos o envio
+                    showStatusMessage("📨 Enviando para joaomarcosdasilvapereira13579@gmail.com...", "success");
+                    
+                    // 2. Criar link de email para abrir no cliente de email do usuário
+                    setTimeout(() => {
+                        const emailSubject = encodeURIComponent(`AgroMail - Nova ${type}: ${name}`);
+                        const emailBody = encodeURIComponent(
+                            `Nome: ${name}\n` +
+                            `Email: ${email}\n` +
+                            `Tipo: ${type}\n` +
+                            `Data/Hora: ${new Date().toLocaleString('pt-BR')}\n\n` +
+                            `Mensagem:\n${message}\n\n` +
+                            `---\nEnviado através do sistema AgroMail`
+                        );
+                        
+                        // Abrir cliente de email padrão do usuário
+                        window.location.href = `mailto:joaomarcosdasilvapereira13579@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+                        
+                        // Mostrar mensagem final
+                        showStatusMessage("✅ Mensagem preparada! Abrindo seu cliente de email...", "success");
+                        
+                        // Esconder painel após 3 segundos
+                        setTimeout(() => {
+                            hideLoading();
+                            feedbackPanel.classList.remove("active");
+                            resetForm();
+                            showStatusMessage("📧 Agora é só clicar em 'Enviar' no seu cliente de email!", "success");
+                        }, 3000);
+                        
+                    }, 1500);
+                    
+                }, 1000);
+            });
+        }
+
+        // Adicionar confirmação visual
+        document.getElementById('feedbackEmail').addEventListener('blur', function() {
+            const email = this.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email && !emailRegex.test(email)) {
+                this.style.borderColor = '#f56565';
+            } else {
+                this.style.borderColor = '';
+            }
+        });
+    });
+
+    // ============================================
+    // CONTROLES DO MODAL "SOBRE NÓS"
+    // ============================================
+    const openAboutBtn = document.getElementById("openAboutBtn");
+    const aboutOverlay = document.getElementById("aboutOverlay");
+    const closeAboutBtn = document.getElementById("closeAboutBtn");
+
+    // Abrir modal "Sobre Nós"
+    openAboutBtn.onclick = () => {
+        aboutOverlay.style.display = "flex";
+        // Fechar painéis se estiverem abertos
+        themePanel.classList.remove("active");
+        feedbackPanel.classList.remove("active");
+        // Fechar modal de login se estiver aberto
+        overlay.style.display = "none";
+    };
+
+    // Fechar modal "Sobre Nós"
+    closeAboutBtn.onclick = () => {
+        aboutOverlay.style.display = "none";
+    };
+
+    // Fechar modal "Sobre Nós" clicando fora
+    aboutOverlay.onclick = (e) => {
+        if (e.target === aboutOverlay) {
+            aboutOverlay.style.display = "none";
+        }
+    };
+
+    // Fechar modal "Sobre Nós" com tecla ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && aboutOverlay.style.display === 'flex') {
+            aboutOverlay.style.display = 'none';
+        }
+    });
+
+    // Tooltip para o botão "Sobre Nós" (simples)
+    openAboutBtn.addEventListener('mouseenter', () => {
+        const tooltip = document.createElement('div');
+        tooltip.id = 'aboutTooltip';
+        tooltip.textContent = 'Clique para saber mais sobre nós';
+        tooltip.style.position = 'absolute';
+        tooltip.style.background = 'rgba(0,0,0,0.8)';
+        tooltip.style.color = 'white';
+        tooltip.style.padding = '5px 10px';
+        tooltip.style.borderRadius = '4px';
+        tooltip.style.fontSize = '14px';
+        tooltip.style.whiteSpace = 'nowrap';
+        tooltip.style.zIndex = '2001';
+        tooltip.style.top = '70px';
+        tooltip.style.left = '0';
+        tooltip.style.pointerEvents = 'none';
+        
+        // Remover tooltip anterior se existir
+        const existingTooltip = document.getElementById('aboutTooltip');
+        if (existingTooltip) {
+            existingTooltip.remove();
+        }
+        
+        openAboutBtn.parentNode.appendChild(tooltip);
+    });
+
+    openAboutBtn.addEventListener('mouseleave', () => {
+        const tooltip = document.getElementById('aboutTooltip');
+        if (tooltip) {
+            tooltip.remove();
+        }
+    });
+    
+    // ============================================
+    // CONTROLES JS — PAINEL DE CONFIGURAÇÕES E MODAL PRINCIPAL
+    // ============================================
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        // Controles do modal principal (Entrar)
+        const openMenu = document.getElementById("openMenu");
+        const overlay = document.getElementById("menuOverlay");
+        const closeMenu = document.getElementById("closeMenu");
+
+        // Abrir modal principal
+        openMenu.onclick = () => {
+            overlay.style.display = "flex";
+            // Fechar outros elementos se estiverem abertos
+            aboutOverlay.style.display = "none";
+            themePanel.classList.remove("active");
+            feedbackPanel.classList.remove("active");
+        };
+
+        // Fechar modal principal
+        closeMenu.onclick = () => {
+            overlay.style.display = "none";
+        };
+
+        // Fechar modal principal clicando fora
+        overlay.onclick = (e) => {
+            if (e.target === overlay) {
+                overlay.style.display = "none";
+            }
+        };
+
+        // Fechar modal principal com tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && overlay.style.display === 'flex') {
+                overlay.style.display = 'none';
+            }
+        });
+
+        // Animar botão principal
+        openMenu.addEventListener('mouseenter', () => {
+            openMenu.style.transform = 'scale(1.05)';
+        });
+
+        openMenu.addEventListener('mouseleave', () => {
+            openMenu.style.transform = 'scale(1)';
+        });
+
+        // ============================================
+        // PAINEL DE CONFIGURAÇÕES
+        // ============================================
+        const settingsToggle = document.getElementById("settingsToggle");
+        const themePanel = document.getElementById("themePanel");
+        
+        if (settingsToggle && themePanel) {
+            settingsToggle.onclick = () => {
+                themePanel.classList.toggle("active");
+                // Fechar outros elementos se estiverem abertos
+                aboutOverlay.style.display = 'none';
+                overlay.style.display = 'none';
+                feedbackPanel.classList.remove("active");
+            };
+        }
+        
+        // Fechar painel clicando fora
+        document.addEventListener('click', (e) => {
+            if (themePanel.classList.contains('active') && 
+                !themePanel.contains(e.target) && 
+                !settingsToggle.contains(e.target)) {
+                themePanel.classList.remove("active");
+            }
+        });
+        
+        // Fechar painel com tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && themePanel.classList.contains('active')) {
+                themePanel.classList.remove("active");
+            }
+        });
+        
+        // === TEMA ===
+        const light = document.getElementById("lightMode");
+        const dark = document.getElementById("darkMode");
+        
+        if (light && dark) {
+            function applyTheme(theme) {
+                if (theme === "dark") {
+                    document.body.classList.add("dark-mode");
+                    dark.classList.add("active");
+                    light.classList.remove("active");
+                } else {
+                    document.body.classList.remove("dark-mode");
+                    light.classList.add("active");
+                    dark.classList.remove("active");
+                }
+                localStorage.setItem("theme", theme);
+            }
+            
+            light.onclick = () => applyTheme("light");
+            dark.onclick = () => applyTheme("dark");
+            
+            // Aplicar tema salvo ou padrão
+            applyTheme(localStorage.getItem("theme") || "light");
+        }
+        
+        // === CONTROLE DE BRILHO ===
+        const brightnessSlider = document.getElementById("brightnessSlider");
+        const brightnessValue = document.getElementById("brightnessValue");
+        const brightnessDecrease = document.getElementById("brightnessDecrease");
+        const brightnessIncrease = document.getElementById("brightnessIncrease");
+        
+        if (brightnessSlider || brightnessDecrease || brightnessIncrease) {
+            let currentBrightness = parseFloat(localStorage.getItem("brightnessAmount")) || 100;
+            
+            function updateBrightness(value) {
+                currentBrightness = Math.min(Math.max(value, 50), 150);
+                document.documentElement.style.setProperty("--brightness", `${currentBrightness}%`);
+                if (brightnessSlider) brightnessSlider.value = currentBrightness;
+                if (brightnessValue) brightnessValue.textContent = `Brilho: ${currentBrightness}%`;
+                localStorage.setItem("brightnessAmount", currentBrightness);
+            }
+            
+            updateBrightness(currentBrightness);
+            
+            if (brightnessSlider) {
+                brightnessSlider.addEventListener("input", () => updateBrightness(parseFloat(brightnessSlider.value)));
+            }
+            
+            if (brightnessDecrease) {
+                brightnessDecrease.addEventListener("click", () => updateBrightness(currentBrightness - 5));
+            }
+            
+            if (brightnessIncrease) {
+                brightnessIncrease.addEventListener("click", () => updateBrightness(currentBrightness + 5));
+            }
+        }
+        
+        // === CONTROLE DE FONTE ===
+        const fontIncreaseBtn = document.getElementById("fontIncrease");
+        const fontDecreaseBtn = document.getElementById("fontDecrease");
+        const fontValueEl = document.getElementById("fontValue");
+        
+        if (fontIncreaseBtn && fontDecreaseBtn) {
+            // Tamanhos de fonte disponíveis (em pixels)
+            const fontSizes = [14, 15, 16, 17.5, 19, 21, 23];
+            const fontSizeKey = "fontSizeBase";
+            
+            // Verificar se há um tamanho salvo no localStorage
+            const savedFontSize = parseFloat(localStorage.getItem(fontSizeKey));
+            let currentFontIndex;
+            
+            if (savedFontSize) {
+                currentFontIndex = fontSizes.findIndex(size => size === savedFontSize);
+                if (currentFontIndex === -1) {
+                    const closest = fontSizes.reduce((prev, curr) => {
+                        return Math.abs(curr - savedFontSize) < Math.abs(prev - savedFontSize) ? curr : prev;
+                    });
+                    currentFontIndex = fontSizes.indexOf(closest);
+                }
+            } else {
+                currentFontIndex = 3; // Começa com 17.5px (índice 3)
+            }
+            
+            // Atualiza o valor exibido
+            function updateFontDisplay() {
+                const selectedSize = fontSizes[currentFontIndex];
+                
+                if (fontValueEl) {
+                    const defaultSize = 17.5;
+                    const percent = Math.round((selectedSize / defaultSize) * 100);
+                    fontValueEl.textContent = `Tamanho: ${percent}%`;
+                }
+            }
+            
+            // Aplica o tamanho de fonte
+            function applyFontSize() {
+                const selectedSize = fontSizes[currentFontIndex];
+                document.documentElement.style.setProperty('--font-base', selectedSize + 'px');
+                localStorage.setItem(fontSizeKey, selectedSize.toString());
+                
+                // Forçar reflow
+                document.body.style.animation = 'none';
+                setTimeout(() => {
+                    document.body.style.animation = '';
+                }, 10);
+            }
+            
+            // Configurar botões
+            fontIncreaseBtn.addEventListener("click", () => {
+                if (currentFontIndex < fontSizes.length - 1) {
+                    currentFontIndex++;
+                    applyFontSize();
+                    updateFontDisplay();
+                }
+            });
+            
+            fontDecreaseBtn.addEventListener("click", () => {
+                if (currentFontIndex > 0) {
+                    currentFontIndex--;
+                    applyFontSize();
+                    updateFontDisplay();
+                }
+            });
+            
+            // Inicializar
+            updateFontDisplay();
+            applyFontSize();
+        }
+    });
+</script>
+
+</body>
+</html>

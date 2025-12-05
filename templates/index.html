@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Início — Ordens de Serviço{% endblock %}
+{% block navbar_extra %}
+<li>
+  <a href="{{ url_for('signup') }}" id="signupBtn" class="auth-btn">Criar Nova Conta</a>
+</li>
+<li>
+  <a href="{{ url_for('login') }}" id="loginBtn" class="auth-btn">Fazer Login Em Outra Conta</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<section class="card card-inicio">
+ <h1 class="titulo-secundario">Controle de Ordens de Serviço</h1>
+   <p class="subtitulo">Use o menu para cadastrar cultivares, abrir ordens e visualizar suas ordens.</p>
+
+    {% if session.get('role') == 'solicitante' %}
+      
+        <div style="
+            position: absolute;
+            bottom: 50px; /* Mesma altura */
+            left: 150px; /* Posição à esquerda */
+            z-index: 1000;
+            filter: brightness(var(--brightness, 100%));
+        ">
+          <a class="button" href="{{ url_for('ordens') }}">Abrir Ordem de Serviço</a>
+        </div>
+        
+        <div style="
+            position: absolute;
+            bottom: 50px; /* Mesma altura */
+            right: 150px; /* Posição à direita */
+            left: auto; /* Garante que 'left' não interfira */
+            z-index: 1000;
+            filter: brightness(var(--brightness, 100%)); 
+        ">
+          <a class="button" href="{{ url_for('ordens_minhas') }}">Ver Minhas Ordens</a>
+        </div>
+    
+    {% elif session.get('role') == 'operador' or session.get('username') == 'adm' %}
+        
+        <div style="
+            position: absolute;
+            bottom: 50px; /* Mesma altura */
+            left: 150px; /* Posição à esquerda */
+            z-index: 1000;
+            filter: brightness(var(--brightness, 100%));
+        ">
+            <a href="{{ url_for('cultivares') }}" class="button">
+                Cadastrar Cultivares
+            </a>
+        </div>
+        
+        <div style="
+            position: absolute;
+            bottom: 50px; /* Mesma altura */
+            right: 150px; /* Posição à direita */
+            left: auto; /* Garante que 'left' não interfira */
+            z-index: 1000;
+            filter: brightness(var(--brightness, 100%)); 
+        ">
+            <a href="{{ url_for('ordens_todas') }}" class="button">
+                Ver Todas as Ordens
+            </a>
+        </div>
+
+    {% endif %}
+    
+</section>
+{% endblock %}

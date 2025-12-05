@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Ordens de Serviço{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/navigation.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  </head>
+
+  <body class="{% block body_class %}{% endblock %}">
+
+{% block nav %}
+<nav class="navbar">
+  <div class="container">
+
+    <!-- ESQUERDA: OLÁ -->
+    <div class="nav-left" style="display:flex; align-items:center; gap:10px;">
+      <span class="brand"></span>
+
+      {% if session.get('user_id') %}
+        <span><strong>Seja Bem-Vindo(a),<br>{{ session.get('username') }}</strong></span>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="button secondary">Entrar</a>
+      {% endif %}
+    </div>
+
+    <!-- CENTRO: BOTÕES (ABRIR ORDEM / MINHAS ORDENS / ORDENS TODAS / CULTIVARES) -->
+    {% if session.get('user_id') %}
+    <div class="nav-center" style="display:flex; gap:25px; margin-left:auto; margin-right:auto;">
+
+      {% if request.endpoint in ['ordens', 'ordens_minhas'] %}
+        <a href="{{ url_for('ordens') }}" class="button">Lançar Uma Ordem</a>
+        
+        <a href="{{ url_for('ordens_minhas') }}" class="button">Ordens Criadas Por Mim</a>
+      {% endif %}
+
+      {% if request.endpoint in ['ordens_todas', 'cultivares'] %}
+        <a href="{{ url_for('cultivares') }}" class="button">Cadastrar Cultivares</a>
+        
+        <a href="{{ url_for('ordens_todas') }}" class="button">Vizualizar Ordens De Todos</a>
+      {% endif %}
+
+    </div>
+    {% endif %}
+
+    {% if session.get('user_id') and request.endpoint != 'index' %}
+  <div style="
+    position: absolute;
+    bottom: -60px;
+    left: 900px;
+    z-index: 1000;
+    filter: brightness(var(--brightness, 100%)); /* herda o brilho do sistema */
+  ">
+    <a href="{{ url_for('index') }}" class="button" style="
+      background-color: var(--primary);
+      color: var(--text);
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 16px;
+      border: 2.75px solid var(--border);
+      transition: all 0.3s ease;
+      filter: brightness(var(--brightness, 100%)); /* aplica o brilho */
+    "
+    onmouseover="
+      this.style.backgroundColor = document.body.classList.contains('dark-mode') ? 'var(--verde)' : 'var(--roxo)';
+      this.style.color = document.body.classList.contains('dark-mode') ? 'var(--preto)' : 'var(--branco)';
+    "
+    onmouseout="
+      this.style.backgroundColor = 'var(--primary)';
+      this.style.color = 'var(--text)';
+    "
+    >
+      Menu de Serviços
+    </a>
+    </div>
+    {% endif %}
+
+    
+
+
+  </div>
+</nav>
+{% endblock %}
+
+    <main class="container">
+      <!-- Botão de Reclamações/Sugestões -->
+      <button class="feedback-btn" id="feedbackToggle" title="Enviar Reclamação/Sugestão">
+          <i class="fas fa-comment-alt"></i>
+      </button>
+
+      <!-- Painel de Reclamações -->
+      <div class="feedback-panel" id="feedbackPanel">
+          <h3>ENVIAR RECLAMAÇÃO/SUGESTÃO</h3>
+          
+          <!-- FORMULÁRIO QUE ENVIA DIRETAMENTE PARA O EMAIL -->
+          <form class="feedback-form" id="feedbackForm">
+              <!-- NÃO USAMOS ACTION EXTERNA - vamos enviar via JavaScript -->
+              
+              <div class="form-group">
+                  <label for="feedbackName">Seu Nome:</label>
+                  <input type="text" id="feedbackName" name="name" placeholder="Digite seu nome" required>
+              </div>
+              
+              <div class="form-group">
+                  <label for="feedbackEmail">Seu Email:</label>
+                  <input type="email" id="feedbackEmail" name="email" placeholder="exemplo@email.com" required>
+              </div>
+              
+              <div class="form-group">
+                  <label for="feedbackType">Tipo de Mensagem:</label>
+                  <select id="feedbackType" name="type" required>
+                      <option value="" disabled selected>Selecione uma opção</option>
+                      <option value="reclamação">Reclamação</option>
+                      <option value="sugestão">Sugestão</option>
+                      <option value="elogio">Elogio</option>
+                      <option value="problema">Reportar Problema</option>
+                      <option value="duvida">Dúvida</option>
+                  </select>
+              </div>
+              
+              <div class="form-group">
+                  <label for="feedbackMessage">Mensagem:</label>
+                  <textarea id="feedbackMessage" name="message" placeholder="Descreva sua reclamação, sugestão ou feedback..." required></textarea>
+              </div>
+              
+              <!-- Loading spinner -->
+              <div class="loading-spinner" id="loadingSpinner"></div>
+              
+              <div class="form-buttons">
+                  <button type="submit" class="btn-submit" id="submitBtn">Enviar Mensagem</button>
+                  <button type="button" class="btn-cancel" id="cancelFeedback">Cancelar</button>
+              </div>
+          </form>
+          
+          <div id="statusMessage" class="status-message"></div>
+      </div>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash {{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}{% endblock %}
+
+      <!-- Botão de Configurações -->
+      <button class="settings-btn" id="settingsToggle">
+        <i class="fa-solid fa-gear"></i>
+      </button>
+
+      <!-- Painel de Configurações -->
+      <div class="theme-settings" id="themePanel">
+        <h3>CONFIGURAÇÕES</h3>
+        
+        <div class="mode-options">
+          <button class="mode-btn light active" id="lightMode"></button>
+          <button class="mode-btn dark" id="darkMode"></button>
+        </div>
+        
+        <div class="brightness-control">
+          <h5>CONTROLE DE BRILHO</h5>
+          <div class="brightness-slider-container">
+            <button class="brightness-btn" id="brightnessDecrease">-</button>
+            <input type="range" min="50" max="150" value="100" class="brightness-slider" id="brightnessSlider">
+            <button class="brightness-btn" id="brightnessIncrease">+</button>
+          </div>
+          <div class="brightness-value">
+            <i class="fas fa-sun brightness-icon"></i>
+            <span id="brightnessValue">Brilho: 100%</span>
+          </div>
+        </div>
+
+        <div class="font-control">
+          <h5>CONTROLE DE FONTE</h5>
+          <div class="font-control-container">
+            <button class="font-btn" id="fontDecrease">A-</button>
+            <button class="font-btn" id="fontIncrease">A+</button>
+          </div>
+          <div class="font-value">
+            <i class="fas fa-font font-icon"></i>
+            <span id="fontValue">Tamanho: 100%</span>
+          </div>
+        </div>
+
+        <div class="auth-control">
+          <h5>AUTENTICAÇÃO</h5>
+          <div class="auth-buttons">
+            
+            {% if session.get('user_id') %}
+
+            <a href="{{ url_for('signup') }}" id="signupBtn" class="auth-btn">Criar Nova Conta</a>
+            <a href="{{ url_for('login') }}" id="loginBtn" class="auth-btn">Fazer Login Em Outra Conta</a>
+            <a href="{{ url_for('aprimeirapagina') }}" id="loginBtn" class="auth-btn">Página Inicial</a>
+
+            {% endif %}
+
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/navigation.js') }}"></script>
+
+  </body>
+</html>
