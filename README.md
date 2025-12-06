@@ -1,28 +1,24 @@
 # projetoAgromailDeJoaoMarcosEGabrielleRiboli
 
-Abra o terminal do VS Studio Code:
+Abra o terminal do VS Studio Code pelo seguinte atalho:
 
 Ctrl + `
 
-Crie uma maquina virtual digitando:
+Crie agora uma maquina virtual digitando:
 
 python -m venv venv
 
-Ative esta maquina virtual digitando:
+Agora para ativar esta maquina virtual criada, considere antes o seguinte:
 
-Se estiver no Git Bash digite:
+Se estiver no Git Bash digite: source venv/Scripts/activate
 
-source venv/Scripts/activate
+Se estiver no Command Prompt digite: venv\Scripts\activate.bat
 
-Se estiver no Command Prompt digite:
+Se estiver no PowerShelll digite: venv\Scripts\Activate.ps1 
+Caso não funcione digite comando siga digitando: Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass 
+Depois digite novamente: : venv\Scripts\Activate.ps1 .
 
-venv\Scripts\activate.bat
-
-Se estiver no PowerShelll digite:
-
-venv\Scripts\Activate.ps1 para caso não tenha funcionado digite então Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass e depois tente ativar novamente.
-
-Ative o Flask:
+Agora ative o Flask:
 
 pip install flask
 
