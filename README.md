@@ -14,7 +14,7 @@ Após selecionar a pasta, e com o terminal aberto isto digite então:
 
 clone https://github.com/Sus117/projetoAgromailDeJoaoMarcosEGabrielleRiboli.git
 
-Concluído isto avançe para a próxima etapa
+Concluído isto avançe para #Segunda Etapa
 -----------------------------------------------------------------
 Segundo método de download:
 
@@ -32,9 +32,9 @@ Digite Ctrl + k e depois Ctrl + o
 
 Agora abra o terminal;
 
-Concluído isto avançe para a próxima etapa
+Concluído isto avançe para #Segunda Etapa
 -----------------------------------------------------------------
-Segunda Etapa - Rodar o arquivo baixado
+#Segunda Etapa - Rodar o arquivo baixado
 -----------------------------------------------------------------
 Crie agora uma maquina virtual digitando:
 
