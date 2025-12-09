@@ -18,7 +18,9 @@ clone https://github.com/Sus117/projetoAgromailDeJoaoMarcosEGabrielleRiboli.git
 -----------------------------------------------------------------
 Segundo método de download:
 
-Clique em
+Clique em um botão verdde chamado code
+
+clique em Download Zip
 -----------------------------------------------------------------
 
 Crie agora uma maquina virtual digitando:
