@@ -1,6 +1,3 @@
-# projetoAgromailDeJoaoMarcosEGabrielleRiboli
-
------------------------------------------------------------------
 #Primeira Etapa - Fazer o Download
 -----------------------------------------------------------------
 Primeiro método de download:
