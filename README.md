@@ -1,7 +1,10 @@
 # projetoAgromailDeJoaoMarcosEGabrielleRiboli
 
-Primeiro método de download:
 -----------------------------------------------------------------
+Primeira Etapa - Fazer o Download
+-----------------------------------------------------------------
+Primeiro método de download:
+
 Crie uma pasta no gerenciador de arquivos
 
 Agora abra ela no vs studio code:
@@ -18,11 +21,24 @@ clone https://github.com/Sus117/projetoAgromailDeJoaoMarcosEGabrielleRiboli.git
 -----------------------------------------------------------------
 Segundo método de download:
 
-Clique em um botão verdde chamado code
+Clique em um botão verde chamado Code
 
-clique em Download Zip
+Clique em Download Zip
+
+Após aguardar o download finalizar
+
+Extraia o arquivo o arquivo no gerenciador de arquivos
+
+Agora abra ela no vs studio code:
+
+Digite Ctrl + k e depois Ctrl + o
+
+Abra o terminal do VS Studio Code pelo seguinte atalho:
+
+Ctrl + `
 -----------------------------------------------------------------
-
+Segunda Etapa - Rodar o arquivo baixado
+-----------------------------------------------------------------
 Crie agora uma maquina virtual digitando:
 
 python -m venv venv
@@ -35,7 +51,7 @@ Se estiver no Command Prompt digite: venv\Scripts\activate.bat
 
 Se estiver no PowerShelll digite: venv\Scripts\Activate.ps1 
 Caso não funcione digite comando siga digitando: Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass 
-Depois digite novamente: : venv\Scripts\Activate.ps1 .
+Depois digite novamente: venv\Scripts\Activate.ps1
 
 Baixe agora requerimentos atualizados, não precisa excluir os atuais:
 
@@ -49,6 +65,8 @@ Agora ative o Flask:
 
 pip install flask
 
-Digite agora:
+Para finalizar apenas digite:
 
 python app.py
+
+O arquivo irá abrir no seu Browser padrão, caso deseje mudar apenas vá em configurações e selecione em arquivos .html em qual ferramenta ele deverá ser aberto.
