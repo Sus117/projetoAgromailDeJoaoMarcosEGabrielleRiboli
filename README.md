@@ -17,6 +17,8 @@ Após selecionar a pasta, e com o terminal aberto isto digite então:
 clone https://github.com/Sus117/projetoAgromailDeJoaoMarcosEGabrielleRiboli.git
 -----------------------------------------------------------------
 Segundo método de download:
+
+Clique em
 -----------------------------------------------------------------
 
 Crie agora uma maquina virtual digitando:
