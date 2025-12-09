@@ -21,13 +21,13 @@ Segundo método de download:
 
 Clique em um botão verde chamado Code
 
-Clique em Download Zip
+Clique em DownloadZip
 
 Após aguardar o download finalizar
 
-Extraia o arquivo o arquivo no gerenciador de arquivos
+Extraia o arquivo o arquivo dentro do gerenciador de arquivos
 
-Agora abra ela no vs studio code:
+Agora abra este mesmo arquivo no vs studio code:
 
 Digite Ctrl + k e depois Ctrl + o
 
