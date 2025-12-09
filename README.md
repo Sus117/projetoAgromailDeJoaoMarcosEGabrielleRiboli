@@ -33,7 +33,6 @@ Digite Ctrl + k e depois Ctrl + o
 Abra o terminal do VS Studio Code pelo seguinte atalho:
 
 Ctrl + `
-
 -----------------------------------------------------------------
 Segunda Etapa - Rodar o arquivo baixado
 -----------------------------------------------------------------
