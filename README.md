@@ -18,13 +18,17 @@ Se estiver no PowerShelll digite: venv\Scripts\Activate.ps1
 Caso não funcione digite comando siga digitando: Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass 
 Depois digite novamente: : venv\Scripts\Activate.ps1 .
 
+Baixe agora requerimentos atualizados, não precisa excluir os atuais:
+
+pip install -r requirements.txt
+
+Ele se utiliza também de um pacote sobressalente, então digite:
+
+pip install cryptography
+
 Agora ative o Flask:
 
 pip install flask
-
-Baixe requerimentos atualizados, não precisa excluir os atuais:
-
-pip install -r requirements.txt
 
 Digite agora:
 
