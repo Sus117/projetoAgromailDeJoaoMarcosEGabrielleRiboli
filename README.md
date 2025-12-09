@@ -8,13 +8,13 @@ Agora abra ela no vs studio code:
 
 Digite Ctrl + k e depois Ctrl + o
 
-Abra o terminal do VS Studio Code pelo seguinte atalho:
-
-Ctrl + `
+Agora abra o terminal;
 
 Após selecionar a pasta, e com o terminal aberto isto digite então:
 
 clone https://github.com/Sus117/projetoAgromailDeJoaoMarcosEGabrielleRiboli.git
+
+Concluído isto avançe para a próxima etapa
 -----------------------------------------------------------------
 Segundo método de download:
 
@@ -30,9 +30,9 @@ Agora abra ela no vs studio code:
 
 Digite Ctrl + k e depois Ctrl + o
 
-Abra o terminal do VS Studio Code pelo seguinte atalho:
+Agora abra o terminal;
 
-Ctrl + `
+Concluído isto avançe para a próxima etapa
 -----------------------------------------------------------------
 Segunda Etapa - Rodar o arquivo baixado
 -----------------------------------------------------------------
