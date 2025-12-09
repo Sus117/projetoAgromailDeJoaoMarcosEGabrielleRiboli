@@ -2,15 +2,19 @@
 -----------------------------------------------------------------
 Primeiro método de download:
 
-Crie uma pasta no gerenciador de arquivos
+Crie uma pasta no explorador de arquivos
 
 Agora abra ela no VS Studio Code:
 
-Digite Ctrl + k e depois Ctrl + o
+Para isto digite Ctrl + k e depois Ctrl + o e agora selecione a pasta criada
 
-Agora abra o terminal;
+Agora abra o terminal; 
 
-Após selecione a pasta, e com o terminal aberto digite isto então:
+Obs: Você deve criar um terminal específico:
+
+Clique em +v e selecione agora um terminal Git Bash.
+
+Com o terminal aberto digite isto então:
 
 clone https://github.com/Sus117/projetoAgromailDeJoaoMarcosEGabrielleRiboli.git
 
@@ -21,17 +25,23 @@ Segundo método de download:
 
 Clique em um botão verde chamado Code
 
-Clique em Download ZIP
+Clique em Download ZIP, botão que se encontra abaixo de Open with GitHub Desktop
 
-Após aguardar o download finalizar
+Agora aguarde o download finalizar
 
-Extraia esta pasta dentro do gerenciador de arquivos
+Agora abra o explorador de arquivos e extraia a pasta baixada
 
 Agora abra esta mesma pasta no VS Studio Code:
 
-Digite Ctrl + k e depois Ctrl + o
+Para isto digite Ctrl + k e depois Ctrl + o e agora selecione a pasta extraida
+
+Ela será a primeira a aparecer
 
 Agora abra o terminal;
+
+Obs: Aqui você possuí 3 Opções de terminal, PowerShell, Git Bash ou Command Prompt
+
+Sinta-se confortavél em escolher qualquer uma das três opções.
 
 Concluído isto avançe para #Segunda Etapa
 
