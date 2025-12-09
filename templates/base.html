@@ -8,9 +8,540 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/styles.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/navigation.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        /* ESTILOS PARA OS NOVOS BOTÕES E MODAIS */
+        
+        /* Botão de Cursor do Mouse */
+        .cursor-btn {
+            position: fixed;
+            top: 8px;
+            right: 163px;
+            background-color: var(--primary);
+            border: 2.75px solid var(--border);
+            border-radius: 8px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 1001;
+        }
+
+        .cursor-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            background-color: var(--hover);
+        }
+
+        .cursor-btn i {
+            font-size: 26px;
+            color: var(--text);
+        }
+
+        /* Botão "Sobre Nós" */
+        .info-icon-container {
+            position: fixed;
+            top: 1175px;
+            left: 40px;
+            z-index: 1002;
+        }
+
+        .info-icon {
+            background: var(--primary);
+            color: var(--text);
+            border: 2.75px solid var(--border);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .info-icon:hover {
+            transform: scale(1.1);
+            background: var(--hover);
+        }
+
+        /* Modal "Sobre Nós" Personalizado */
+        .about-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .about-modal {
+            background-color: var(--panel);
+            border: 2.75px solid var(--border);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            animation: modalFadeIn 0.3s ease;
+            color: var(--text);
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .about-modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--primary);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .about-modal-header h3 {
+            margin: 0;
+            color: var(--text);
+            font-size: 1.4em;
+        }
+
+        .close-about-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-about-btn:hover {
+            background-color: rgba(0,0,0,0.1);
+            transform: rotate(90deg);
+        }
+
+        .about-modal-body {
+            padding: 20px;
+        }
+
+        /* Modal de Cursor do Mouse */
+        .cursor-panel {
+            position: fixed;
+            top: 110px;
+            right: 163px;
+            background-color: var(--panel);
+            border: 2.75px solid var(--border);
+            color: var(--text);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            padding: 25px;
+            width: 380px;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .cursor-panel.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(0);
+        }
+
+        .cursor-panel h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        /* Opções de cursor */
+        .cursor-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .cursor-type {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 15px 10px;
+            border-radius: 8px;
+            border: 2.75px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .cursor-type:hover {
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .cursor-type.active {
+            border-color: var(--hover);
+            background: rgba(0,0,0,0.05);
+        }
+
+        body.dark-mode .cursor-type.active {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .cursor-preview {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: var(--text);
+            margin-bottom: 5px;
+        }
+
+        .cursor-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Controle do círculo no clique */
+        .circle-control {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2.75px solid var(--border);
+        }
+
+        .circle-control h4 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .circle-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .circle-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 2.75px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .circle-option:hover {
+            border-color: var(--primary);
+        }
+
+        .circle-option.active {
+            border-color: var(--hover);
+            background: rgba(0,0,0,0.05);
+        }
+
+        body.dark-mode .circle-option.active {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .circle-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .circle-yes .circle-preview {
+            background-color: var(--primary);
+            border: 2.75px solid var(--border);
+        }
+
+        .circle-no .circle-preview {
+            background-color: transparent;
+            border: 2.75px dashed var(--border);
+        }
+
+        /* Estilos para os diferentes tipos de cursor */
+        .cursor-preview.default { cursor: default; }
+        .cursor-preview.pointer { cursor: pointer; }
+        .cursor-preview.text { cursor: text; }
+        .cursor-preview.crosshair { cursor: crosshair; }
+        .cursor-preview.wait { cursor: wait; }
+        .cursor-preview.help { cursor: help; }
+        .cursor-preview.move { cursor: move; }
+        .cursor-preview.zoom-in { cursor: zoom-in; }
+        .cursor-preview.grab { cursor: grab; }
+
+        /* Botões dos painéis */
+        .panel-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .panel-buttons button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .cursor-btn {
+                top: 12px;
+                right: 130px;
+                width: 45px;
+                height: 45px;
+            }
+            
+            .cursor-btn i {
+                font-size: 24px;
+            }
+            
+            .cursor-panel {
+                width: 90%;
+                max-width: 320px;
+                right: 5%;
+            }
+            
+            .cursor-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .info-icon-container {
+                top: auto;
+                bottom: 40px;
+                left: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cursor-btn {
+                top: 10px;
+                right: 115px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .cursor-btn i {
+                font-size: 22px;
+            }
+            
+            .cursor-panel {
+                top: 80px;
+                padding: 15px;
+            }
+            
+            .cursor-panel h3 {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+            
+            .cursor-options {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .info-icon-container {
+                bottom: 30px;
+                left: 30px;
+            }
+            
+            .info-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+        }
+    </style>
   </head>
 
   <body class="{% block body_class %}{% endblock %}">
+
+    <!-- BOTÃO DE CURSOR DO MOUSE -->
+    <button class="cursor-btn" id="cursorToggle" title="Configurar Cursor do Mouse">
+        <i class="fas fa-mouse-pointer"></i>
+    </button>
+
+    <!-- Botão "Sobre Nós" -->
+    <div class="info-icon-container">
+        <button type="button" class="info-icon" id="openAboutBtn">
+            <i class="fas fa-info"></i>
+        </button>
+    </div>
+
+    <!-- Modal "Sobre Nós" Personalizado -->
+    <div class="about-overlay" id="aboutOverlay">
+        <div class="about-modal">
+            <div class="about-modal-header">
+                <h3>AgroMail - Quem Somos</h3>
+                <button class="close-about-btn" id="closeAboutBtn">&times;</button>
+            </div>
+            <div class="about-modal-body">
+                <!-- Seção 1: Introdução -->
+                <div class="section-title">Nossa História</div>
+                <p>Fundada em 2025, a AgroMail nasceu da visão de transformar o agronegócio brasileiro através da tecnologia. Começamos recentemente como uma ainda pequena startup no em Rondonnpólis e hoje atendemos produtores rurais em todo o território estadual.</p>
+                
+                <div class="highlight">
+                    <strong>Missão:</strong> Sermos os pioneiros no campo do uso de tecnologias diretamente ligadas a ordens de serviço, oferecendo soluções simples, porém robustas, dinamicas que buscam inovar no aumento de produtividade e sustentabilidade no agronegócio.
+                </div>
+                
+                <hr class="divider">
+                
+                <!-- Seção 2: Valores -->
+                <div class="section-title">Nossos Valores</div>
+                <ul class="feature-list">
+                    <li><strong>Inovação:</strong> Buscamos constantemente novas tecnologias para o campo</li>
+                    <li><strong>Qualidade:</strong> Excelência em nossos produtos e serviços</li>
+                    <li><strong>Transparência:</strong> Relacionamento claro e honesto com clientes</li>
+                    <li><strong>Compromisso:</strong> Cumprimos rigorosamente nossos prazos</li>
+                    <li><strong>Sustentabilidade:</strong> Soluções que respeitam o meio ambiente</li>
+                    <li><strong>Parceria:</strong> Crescemos junto com nossos clientes</li>
+                </ul>
+                
+                <hr class="divider">
+                
+                <!-- Seção 4: Diferenciais -->
+                <div class="section-title">Por que escolher a AgroMail?</div>
+                <p><strong>Especialização:</strong> Somos especialistas em tecnologia para o agronegócio há mais de 10 anos.</p>
+                <p><strong>Suporte:</strong> Equipe técnica disponível 24/7 para emergências no campo.</p>
+                <p><strong>Personalização:</strong> Adaptamos nossas soluções para cada tipo de cultivo e propriedade.</p>
+                
+                <div class="highlight">
+                    <strong>Resultados Comprovados:</strong> Mais de 20 propriedades rurais aumentaram sua produtividade em média 45% utilizando nossa solução.
+                </div>
+                
+                <hr class="divider">
+                
+                <!-- Seção 5: Contato -->
+                <div class="contact-info">
+                    <div class="section-title">Para Mais Contato</div>
+                    <p><i class="fas fa-phone"></i> <strong>Telefone:</strong> (66) 99999-9999</p>
+                    <p><i class="fas fa-envelope"></i> <strong>Email:</strong> contato@agromail.com.br</p>
+                    <p><i class="fas fa-clock"></i> <strong>Horário:</strong> Segunda a Sexta, 8h às 18h</p>
+                    <p><i class="fas fa-map-marker-alt"></i> <strong>Sede:</strong> Av. Lions, 1000 - Rondonópolis/MT</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE CURSOR DO MOUSE -->
+    <div class="cursor-panel" id="cursorPanel">
+        <h3>CONFIGURAR CURSOR DO MOUSE</h3>
+        
+        <div class="cursor-section">
+            <h4>Escolha o Tipo de Cursor</h4>
+            <div class="cursor-options" id="cursorOptions">
+                <!-- Cursor padrão -->
+                <div class="cursor-type" data-cursor="default">
+                    <div class="cursor-preview default">
+                        <i class="fas fa-arrow-pointer"></i>
+                    </div>
+                    <div class="cursor-name">Padrão</div>
+                </div>
+                
+                <!-- Cursor de ponteiro -->
+                <div class="cursor-type" data-cursor="pointer">
+                    <div class="cursor-preview pointer">
+                        <i class="fas fa-hand-point-up"></i>
+                    </div>
+                    <div class="cursor-name">Ponteiro</div>
+                </div>
+                
+                <!-- Cursor de texto -->
+                <div class="cursor-type" data-cursor="text">
+                    <div class="cursor-preview text">
+                        <i class="fas fa-i-cursor"></i>
+                    </div>
+                    <div class="cursor-name">Texto</div>
+                </div>
+                
+                <!-- Cursor de mira -->
+                <div class="cursor-type" data-cursor="crosshair">
+                    <div class="cursor-preview crosshair">
+                        <i class="fas fa-crosshairs"></i>
+                    </div>
+                    <div class="cursor-name">Mira</div>
+                </div>
+                
+                <!-- Cursor de espera -->
+                <div class="cursor-type" data-cursor="wait">
+                    <div class="cursor-preview wait">
+                        <i class="fas fa-spinner"></i>
+                    </div>
+                    <div class="cursor-name">Espera</div>
+                </div>
+                
+                <!-- Cursor de ajuda -->
+                <div class="cursor-type" data-cursor="help">
+                    <div class="cursor-preview help">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="cursor-name">Ajuda</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="circle-control">
+            <h4>Círculo no Clique do Mouse</h4>
+            <p class="circle-description" style="font-size: 0.9rem; margin-bottom: 15px; color: var(--muted);">
+                Mostra um círculo animado quando você clica em qualquer elemento
+            </p>
+            <div class="circle-toggle">
+                <div class="circle-option circle-yes active" id="circleYes">
+                    <div class="circle-preview">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="circle-name">Ativado</div>
+                </div>
+                <div class="circle-option circle-no" id="circleNo">
+                    <div class="circle-preview">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="circle-name">Desativado</div>
+                </div>
+            </div>
+            <div class="circle-colors" style="margin-top: 15px; font-size: 0.85rem; color: var(--muted);">
+                <p><strong>Cores do círculo:</strong> Branco (#fff) no tema escuro • Laranja (#cc6600) no tema claro</p>
+            </div>
+        </div>
+        
+        <div class="panel-buttons">
+            <button class="btn-submit" id="applyCursor">Aplicar Configurações</button>
+            <button class="btn-cancel" id="cancelCursor">Cancelar</button>
+        </div>
+    </div>
 
 {% block nav %}
 <nav class="navbar">
@@ -31,54 +562,14 @@
     {% if session.get('user_id') %}
     <div class="nav-center" style="display:flex; gap:25px; margin-left:auto; margin-right:auto;">
 
-      {% if request.endpoint in ['ordens', 'ordens_minhas'] %}
-        <a href="{{ url_for('ordens') }}" class="button">Lançar Uma Ordem</a>
-        
-        <a href="{{ url_for('ordens_minhas') }}" class="button">Ordens Criadas Por Mim</a>
-      {% endif %}
-
-      {% if request.endpoint in ['ordens_todas', 'cultivares'] %}
-        <a href="{{ url_for('cultivares') }}" class="button">Cadastrar Cultivares</a>
-        
-        <a href="{{ url_for('ordens_todas') }}" class="button">Vizualizar Ordens De Todos</a>
-      {% endif %}
 
     </div>
-    {% endif %}
+    
+{% endif %}
 
     {% if session.get('user_id') and request.endpoint != 'index' %}
-  <div style="
-    position: absolute;
-    bottom: -60px;
-    left: 900px;
-    z-index: 1000;
-    filter: brightness(var(--brightness, 100%)); /* herda o brilho do sistema */
-  ">
-    <a href="{{ url_for('index') }}" class="button" style="
-      background-color: var(--primary);
-      color: var(--text);
-      padding: 10px 20px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 16px;
-      border: 2.75px solid var(--border);
-      transition: all 0.3s ease;
-      filter: brightness(var(--brightness, 100%)); /* aplica o brilho */
-    "
-    onmouseover="
-      this.style.backgroundColor = document.body.classList.contains('dark-mode') ? 'var(--verde)' : 'var(--roxo)';
-      this.style.color = document.body.classList.contains('dark-mode') ? 'var(--preto)' : 'var(--branco)';
-    "
-    onmouseout="
-      this.style.backgroundColor = 'var(--primary)';
-      this.style.color = 'var(--text)';
-    "
-    >
-      Menu de Serviços
-    </a>
-    </div>
+  
     {% endif %}
-
     
 
 
@@ -157,7 +648,7 @@
       </button>
 
       <!-- Painel de Configurações -->
-      <div class="theme-settings" id="themePanel">
+      <div  class="theme-settings" id="themePanel">
         <h3>CONFIGURAÇÕES</h3>
         
         <div class="mode-options">
@@ -211,6 +702,274 @@
 
     <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/navigation.js') }}"></script>
+    
+    <script>
+        // JavaScript para os novos controles
+        document.addEventListener('DOMContentLoaded', function() {
+            // Controles do Modal "Sobre Nós"
+            const openAboutBtn = document.getElementById("openAboutBtn");
+            const aboutOverlay = document.getElementById("aboutOverlay");
+            const closeAboutBtn = document.getElementById("closeAboutBtn");
+
+            // Abrir modal "Sobre Nós"
+            if (openAboutBtn) {
+                openAboutBtn.onclick = () => {
+                    if (aboutOverlay) {
+                        aboutOverlay.style.display = "flex";
+                        // Fechar painéis se estiverem abertos
+                        const themePanel = document.getElementById("themePanel");
+                        if (themePanel) themePanel.classList.remove("active");
+                        const feedbackPanel = document.getElementById("feedbackPanel");
+                        if (feedbackPanel) feedbackPanel.classList.remove("active");
+                        const cursorPanel = document.getElementById("cursorPanel");
+                        if (cursorPanel) cursorPanel.classList.remove("active");
+                    }
+                };
+            }
+
+            // Fechar modal "Sobre Nós"
+            if (closeAboutBtn) {
+                closeAboutBtn.onclick = () => {
+                    if (aboutOverlay) aboutOverlay.style.display = "none";
+                };
+            }
+
+            // Fechar modal "Sobre Nós" clicando fora
+            if (aboutOverlay) {
+                aboutOverlay.onclick = (e) => {
+                    if (e.target === aboutOverlay) {
+                        aboutOverlay.style.display = "none";
+                    }
+                };
+            }
+
+            // Fechar modal "Sobre Nós" com tecla ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && aboutOverlay && aboutOverlay.style.display === 'flex') {
+                    aboutOverlay.style.display = 'none';
+                }
+            });
+
+            // Controles do Cursor do Mouse
+            const cursorToggle = document.getElementById("cursorToggle");
+            const cursorPanel = document.getElementById("cursorPanel");
+            const cancelCursor = document.getElementById("cancelCursor");
+            const applyCursor = document.getElementById("applyCursor");
+            const cursorOptions = document.querySelectorAll(".cursor-type");
+            const circleYes = document.getElementById("circleYes");
+            const circleNo = document.getElementById("circleNo");
+            
+            // Estado atual das configurações
+            let currentCursorType = localStorage.getItem("cursorType") || "default";
+            let circleEnabled = localStorage.getItem("circleEnabled") !== "false"; // true por padrão
+            
+            // Inicializar configurações salvas do cursor
+            function loadCursorSettings() {
+                // Definir cursor ativo
+                if (cursorOptions) {
+                    cursorOptions.forEach(option => {
+                        if (option.dataset.cursor === currentCursorType) {
+                            option.classList.add("active");
+                        } else {
+                            option.classList.remove("active");
+                        }
+                    });
+                }
+                
+                // Definir círculo ativo
+                if (circleYes && circleNo) {
+                    if (circleEnabled) {
+                        circleYes.classList.add("active");
+                        circleNo.classList.remove("active");
+                    } else {
+                        circleYes.classList.remove("active");
+                        circleNo.classList.add("active");
+                    }
+                }
+                
+                // Aplicar cursor atual
+                applyCursorToBody();
+            }
+            
+            // Aplicar cursor ao body
+            function applyCursorToBody() {
+                document.body.style.cursor = currentCursorType;
+                
+                // Se circleEnabled for true, adicionar evento de clique para mostrar círculo
+                if (circleEnabled) {
+                    document.addEventListener('click', showClickCircle);
+                } else {
+                    document.removeEventListener('click', showClickCircle);
+                }
+            }
+            
+            // Mostrar círculo no clique
+            function showClickCircle(e) {
+                // Criar elemento do círculo
+                const circle = document.createElement('div');
+                circle.style.position = 'fixed';
+                circle.style.width = '40px';
+                circle.style.height = '40px';
+                circle.style.borderRadius = '50%';
+                circle.style.pointerEvents = 'none';
+                circle.style.zIndex = '9999';
+                circle.style.transform = 'translate(-50%, -50%)';
+                circle.style.animation = 'clickCircle 0.5s ease-out forwards';
+                
+                // Definir cor baseada no tema
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                if (isDarkMode) {
+                    circle.style.backgroundColor = '#fff'; // Branco no tema escuro
+                    circle.style.border = '2px solid #fff';
+                } else {
+                    circle.style.backgroundColor = '#cc6600'; // Laranja no tema claro
+                    circle.style.border = '2px solid #cc6600';
+                }
+                
+                // Posicionar onde foi clicado
+                circle.style.left = `${e.clientX}px`;
+                circle.style.top = `${e.clientY}px`;
+                
+                // Adicionar ao body
+                document.body.appendChild(circle);
+                
+                // Remover após animação
+                setTimeout(() => {
+                    circle.remove();
+                }, 500);
+            }
+            
+            // Estilo para a animação do círculo
+            const circleStyle = document.createElement('style');
+            circleStyle.textContent = `
+                @keyframes clickCircle {
+                    0% {
+                        transform: translate(-50%, -50%) scale(0);
+                        opacity: 0.8;
+                    }
+                    100% {
+                        transform: translate(-50%, -50%) scale(2);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(circleStyle);
+            
+            // Abrir/fechar painel de cursor
+            if (cursorToggle && cursorPanel) {
+                cursorToggle.onclick = (e) => {
+                    e.stopPropagation();
+                    loadCursorSettings(); // Carregar configurações salvas
+                    cursorPanel.classList.toggle("active");
+                    // Fechar outros painéis
+                    const themePanel = document.getElementById("themePanel");
+                    if (themePanel) themePanel.classList.remove("active");
+                    const feedbackPanel = document.getElementById("feedbackPanel");
+                    if (feedbackPanel) feedbackPanel.classList.remove("active");
+                    // Fechar modal Sobre Nós
+                    if (aboutOverlay) aboutOverlay.style.display = 'none';
+                };
+            }
+            
+            // Fechar painel de cursor
+            if (cancelCursor) {
+                cancelCursor.onclick = () => {
+                    cursorPanel.classList.remove("active");
+                };
+            }
+            
+            // Selecionar tipo de cursor
+            if (cursorOptions) {
+                cursorOptions.forEach(option => {
+                    option.addEventListener('click', () => {
+                        cursorOptions.forEach(opt => opt.classList.remove("active"));
+                        option.classList.add("active");
+                        currentCursorType = option.dataset.cursor;
+                        
+                        // Aplicar cursor à prévia
+                        const preview = option.querySelector('.cursor-preview');
+                        if (preview) {
+                            preview.style.cursor = currentCursorType;
+                        }
+                    });
+                });
+            }
+            
+            // Selecionar opção de círculo
+            if (circleYes && circleNo) {
+                circleYes.addEventListener('click', () => {
+                    circleYes.classList.add("active");
+                    circleNo.classList.remove("active");
+                    circleEnabled = true;
+                });
+                
+                circleNo.addEventListener('click', () => {
+                    circleYes.classList.remove("active");
+                    circleNo.classList.add("active");
+                    circleEnabled = false;
+                });
+            }
+            
+            // Aplicar configurações do cursor
+            if (applyCursor) {
+                applyCursor.addEventListener('click', () => {
+                    // Salvar configurações
+                    localStorage.setItem("cursorType", currentCursorType);
+                    localStorage.setItem("circleEnabled", circleEnabled);
+                    
+                    // Aplicar configurações
+                    applyCursorToBody();
+                    
+                    // Fechar painel
+                    cursorPanel.classList.remove("active");
+                    
+                    // Mostrar feedback visual
+                    showTemporaryMessage("Configurações do cursor aplicadas!", "success");
+                });
+            }
+            
+            // Mostrar mensagem temporária
+            function showTemporaryMessage(message, type) {
+                const messageDiv = document.createElement('div');
+                messageDiv.textContent = message;
+                messageDiv.style.position = 'fixed';
+                messageDiv.style.top = '20px';
+                messageDiv.style.right = '20px';
+                messageDiv.style.padding = '12px 20px';
+                messageDiv.style.borderRadius = '8px';
+                messageDiv.style.zIndex = '2000';
+                messageDiv.style.fontWeight = '600';
+                messageDiv.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+                
+                if (type === 'success') {
+                    messageDiv.style.backgroundColor = '#48bb78';
+                    messageDiv.style.color = 'white';
+                } else {
+                    messageDiv.style.backgroundColor = '#f56565';
+                    messageDiv.style.color = 'white';
+                }
+                
+                document.body.appendChild(messageDiv);
+                
+                // Remover após 3 segundos
+                setTimeout(() => {
+                    messageDiv.remove();
+                }, 3000);
+            }
+            
+            // Fechar painel de cursor com tecla ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && cursorPanel && cursorPanel.classList.contains('active')) {
+                    cursorPanel.classList.remove("active");
+                }
+            });
+            
+            // Inicializar configurações do cursor ao carregar a página
+            window.addEventListener('load', () => {
+                loadCursorSettings();
+            });
+        });
+    </script>
 
   </body>
 </html>

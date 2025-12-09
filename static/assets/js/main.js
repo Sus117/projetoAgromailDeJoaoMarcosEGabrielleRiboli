@@ -10,10 +10,17 @@ document.addEventListener('DOMContentLoaded', function() {
     if (settingsToggle && themePanel) {
         settingsToggle.onclick = () => {
             themePanel.classList.toggle("active");
-            // Fechar painel de reclamações se estiver aberto
+            // Fechar outros painéis se estiverem abertos
             if (feedbackPanel && feedbackPanel.classList.contains('active')) {
                 feedbackPanel.classList.remove("active");
                 resetForm();
+            }
+            if (cursorPanel && cursorPanel.classList.contains('active')) {
+                cursorPanel.classList.remove("active");
+            }
+            // Fechar modal Sobre Nós se estiver aberto
+            if (aboutOverlay && aboutOverlay.style.display === 'flex') {
+                aboutOverlay.style.display = 'none';
             }
         };
     }
@@ -32,6 +39,328 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === 'Escape' && themePanel && themePanel.classList.contains('active')) {
             themePanel.classList.remove("active");
         }
+    });
+});
+
+/* ============================================
+   CONTROLES DO MODAL "SOBRE NÓS"
+============================================ */
+document.addEventListener('DOMContentLoaded', function() {
+    const openAboutBtn = document.getElementById("openAboutBtn");
+    const aboutOverlay = document.getElementById("aboutOverlay");
+    const closeAboutBtn = document.getElementById("closeAboutBtn");
+
+    // Abrir modal "Sobre Nós"
+    if (openAboutBtn) {
+        openAboutBtn.onclick = () => {
+            if (aboutOverlay) {
+                aboutOverlay.style.display = "flex";
+                // Fechar painéis se estiverem abertos
+                if (themePanel) themePanel.classList.remove("active");
+                if (feedbackPanel) feedbackPanel.classList.remove("active");
+                if (cursorPanel) cursorPanel.classList.remove("active");
+                // Fechar modal de login se estiver aberto
+                const overlay = document.getElementById("menuOverlay");
+                if (overlay) overlay.style.display = "none";
+            }
+        };
+    }
+
+    // Fechar modal "Sobre Nós"
+    if (closeAboutBtn) {
+        closeAboutBtn.onclick = () => {
+            if (aboutOverlay) aboutOverlay.style.display = "none";
+        };
+    }
+
+    // Fechar modal "Sobre Nós" clicando fora
+    if (aboutOverlay) {
+        aboutOverlay.onclick = (e) => {
+            if (e.target === aboutOverlay) {
+                aboutOverlay.style.display = "none";
+            }
+        };
+    }
+
+    // Fechar modal "Sobre Nós" com tecla ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && aboutOverlay && aboutOverlay.style.display === 'flex') {
+            aboutOverlay.style.display = 'none';
+        }
+    });
+
+    // Tooltip para o botão "Sobre Nós"
+    if (openAboutBtn) {
+        openAboutBtn.addEventListener('mouseenter', () => {
+            const tooltip = document.createElement('div');
+            tooltip.id = 'aboutTooltip';
+            tooltip.textContent = 'Clique para saber mais sobre nós';
+            tooltip.style.position = 'absolute';
+            tooltip.style.background = 'rgba(0,0,0,0.8)';
+            tooltip.style.color = 'white';
+            tooltip.style.padding = '5px 10px';
+            tooltip.style.borderRadius = '4px';
+            tooltip.style.fontSize = '14px';
+            tooltip.style.whiteSpace = 'nowrap';
+            tooltip.style.zIndex = '2001';
+            tooltip.style.top = '70px';
+            tooltip.style.left = '0';
+            tooltip.style.pointerEvents = 'none';
+            
+            // Remover tooltip anterior se existir
+            const existingTooltip = document.getElementById('aboutTooltip');
+            if (existingTooltip) {
+                existingTooltip.remove();
+            }
+            
+            openAboutBtn.parentNode.appendChild(tooltip);
+        });
+
+        openAboutBtn.addEventListener('mouseleave', () => {
+            const tooltip = document.getElementById('aboutTooltip');
+            if (tooltip) {
+                tooltip.remove();
+            }
+        });
+    }
+});
+
+/* ============================================
+   CONTROLES DO CURSOR DO MOUSE
+============================================ */
+document.addEventListener('DOMContentLoaded', function() {
+    // Elementos do cursor
+    const cursorToggle = document.getElementById("cursorToggle");
+    const cursorPanel = document.getElementById("cursorPanel");
+    const cancelCursor = document.getElementById("cancelCursor");
+    const applyCursor = document.getElementById("applyCursor");
+    const cursorOptions = document.querySelectorAll(".cursor-type");
+    const circleYes = document.getElementById("circleYes");
+    const circleNo = document.getElementById("circleNo");
+    
+    // Estado atual das configurações
+    let currentCursorType = localStorage.getItem("cursorType") || "default";
+    let circleEnabled = localStorage.getItem("circleEnabled") !== "false"; // true por padrão
+    
+    // Inicializar configurações salvas do cursor
+    function loadCursorSettings() {
+        // Definir cursor ativo
+        if (cursorOptions) {
+            cursorOptions.forEach(option => {
+                if (option.dataset.cursor === currentCursorType) {
+                    option.classList.add("active");
+                } else {
+                    option.classList.remove("active");
+                }
+            });
+        }
+        
+        // Definir círculo ativo
+        if (circleYes && circleNo) {
+            if (circleEnabled) {
+                circleYes.classList.add("active");
+                circleNo.classList.remove("active");
+            } else {
+                circleYes.classList.remove("active");
+                circleNo.classList.add("active");
+            }
+        }
+        
+        // Aplicar cursor atual
+        applyCursorToBody();
+    }
+    
+    // Aplicar cursor ao body
+    function applyCursorToBody() {
+        document.body.style.cursor = currentCursorType;
+        
+        // Se circleEnabled for true, adicionar evento de clique para mostrar círculo
+        if (circleEnabled) {
+            document.addEventListener('click', showClickCircle);
+        } else {
+            document.removeEventListener('click', showClickCircle);
+        }
+    }
+    
+    // Mostrar círculo no clique
+    function showClickCircle(e) {
+        // Criar elemento do círculo
+        const circle = document.createElement('div');
+        circle.style.position = 'fixed';
+        circle.style.width = '40px';
+        circle.style.height = '40px';
+        circle.style.borderRadius = '50%';
+        circle.style.pointerEvents = 'none';
+        circle.style.zIndex = '9999';
+        circle.style.transform = 'translate(-50%, -50%)';
+        circle.style.animation = 'clickCircle 0.5s ease-out forwards';
+        
+        // Definir cor baseada no tema
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        if (isDarkMode) {
+            circle.style.backgroundColor = '#fff'; // Branco no tema escuro
+            circle.style.border = '2px solid #fff';
+        } else {
+            circle.style.backgroundColor = '#cc6600'; // Laranja no tema claro
+            circle.style.border = '2px solid #cc6600';
+        }
+        
+        // Posicionar onde foi clicado
+        circle.style.left = `${e.clientX}px`;
+        circle.style.top = `${e.clientY}px`;
+        
+        // Adicionar ao body
+        document.body.appendChild(circle);
+        
+        // Remover após animação
+        setTimeout(() => {
+            circle.remove();
+        }, 500);
+    }
+    
+    // Estilo para a animação do círculo
+    const circleStyle = document.createElement('style');
+    circleStyle.textContent = `
+        @keyframes clickCircle {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(circleStyle);
+    
+    // Abrir/fechar painel de cursor
+    if (cursorToggle && cursorPanel) {
+        cursorToggle.onclick = (e) => {
+            e.stopPropagation();
+            loadCursorSettings(); // Carregar configurações salvas
+            cursorPanel.classList.toggle("active");
+            // Fechar outros painéis
+            closeAllPanelsExcept('cursor');
+        };
+    }
+    
+    // Fechar painel de cursor
+    if (cancelCursor) {
+        cancelCursor.onclick = () => {
+            cursorPanel.classList.remove("active");
+        };
+    }
+    
+    // Selecionar tipo de cursor
+    if (cursorOptions) {
+        cursorOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                cursorOptions.forEach(opt => opt.classList.remove("active"));
+                option.classList.add("active");
+                currentCursorType = option.dataset.cursor;
+                
+                // Aplicar cursor à prévia
+                const preview = option.querySelector('.cursor-preview');
+                if (preview) {
+                    preview.style.cursor = currentCursorType;
+                }
+            });
+        });
+    }
+    
+    // Selecionar opção de círculo
+    if (circleYes && circleNo) {
+        circleYes.addEventListener('click', () => {
+            circleYes.classList.add("active");
+            circleNo.classList.remove("active");
+            circleEnabled = true;
+        });
+        
+        circleNo.addEventListener('click', () => {
+            circleYes.classList.remove("active");
+            circleNo.classList.add("active");
+            circleEnabled = false;
+        });
+    }
+    
+    // Aplicar configurações do cursor
+    if (applyCursor) {
+        applyCursor.addEventListener('click', () => {
+            // Salvar configurações
+            localStorage.setItem("cursorType", currentCursorType);
+            localStorage.setItem("circleEnabled", circleEnabled);
+            
+            // Aplicar configurações
+            applyCursorToBody();
+            
+            // Fechar painel
+            cursorPanel.classList.remove("active");
+            
+            // Mostrar feedback visual
+            showTemporaryMessage("Configurações do cursor aplicadas!", "success");
+        });
+    }
+    
+    // Fechar todos os painéis exceto um específico
+    function closeAllPanelsExcept(except) {
+        const panels = {
+            'cursor': cursorPanel,
+            'feedback': feedbackPanel,
+            'theme': themePanel
+        };
+        
+        for (const [key, panel] of Object.entries(panels)) {
+            if (key !== except && panel) {
+                panel.classList.remove("active");
+            }
+        }
+        
+        // Fechar modais também
+        if (aboutOverlay) aboutOverlay.style.display = 'none';
+        const overlay = document.getElementById("menuOverlay");
+        if (overlay) overlay.style.display = 'none';
+    }
+    
+    // Mostrar mensagem temporária
+    function showTemporaryMessage(message, type) {
+        const messageDiv = document.createElement('div');
+        messageDiv.textContent = message;
+        messageDiv.style.position = 'fixed';
+        messageDiv.style.top = '20px';
+        messageDiv.style.right = '20px';
+        messageDiv.style.padding = '12px 20px';
+        messageDiv.style.borderRadius = '8px';
+        messageDiv.style.zIndex = '2000';
+        messageDiv.style.fontWeight = '600';
+        messageDiv.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        
+        if (type === 'success') {
+            messageDiv.style.backgroundColor = '#48bb78';
+            messageDiv.style.color = 'white';
+        } else {
+            messageDiv.style.backgroundColor = '#f56565';
+            messageDiv.style.color = 'white';
+        }
+        
+        document.body.appendChild(messageDiv);
+        
+        // Remover após 3 segundos
+        setTimeout(() => {
+            messageDiv.remove();
+        }, 3000);
+    }
+    
+    // Fechar painel de cursor com tecla ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && cursorPanel && cursorPanel.classList.contains('active')) {
+            cursorPanel.classList.remove("active");
+        }
+    });
+    
+    // Inicializar configurações do cursor ao carregar a página
+    window.addEventListener('load', () => {
+        loadCursorSettings();
     });
 });
 
@@ -59,6 +388,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Fechar outros painéis se estiverem abertos
             if (themePanel && themePanel.classList.contains('active')) {
                 themePanel.classList.remove("active");
+            }
+            if (cursorPanel && cursorPanel.classList.contains('active')) {
+                cursorPanel.classList.remove("active");
+            }
+            // Fechar modal Sobre Nós se estiver aberto
+            if (aboutOverlay && aboutOverlay.style.display === 'flex') {
+                aboutOverlay.style.display = 'none';
             }
         };
     }
@@ -775,8 +1111,168 @@ function forceFontRefresh() {
     document.body.style.display = '';
 }
 
-// Exportar funções para uso global (se necessário)
-if (typeof window !== 'undefined') {
-    window.forceFontRefresh = forceFontRefresh;
-    window.reapplyFontSize = forceFontRefresh;
+document.addEventListener("readystatechange", function () {
+    if (document.readyState === "interactive") {
+
+        const page = window.location.pathname;
+
+        if (page.includes("login") ||
+            page.includes("signup")) {
+
+            const s = document.getElementById("settingsToggle");
+            const f = document.getElementById("feedbackToggle");
+            const c = document.getElementById("cursorToggle");
+
+            // Aplica animação curta ANTES de mudar posição
+            const applySnapAnimation = (btn) => {
+                if (btn) {
+                    btn.style.transition = "all 0.0001s linear"; 
+                }
+            };
+
+            if (s) {
+                applySnapAnimation(s);
+                s.style.position = "fixed";
+                s.style.top = "-8px";
+                s.style.right = "37px";
+            }
+
+            if (f) {
+                applySnapAnimation(f);
+                f.style.position = "fixed";
+                f.style.top = "-8px";
+                f.style.right = "100px";
+            }
+            
+            if (c) {
+                applySnapAnimation(c);
+                c.style.position = "fixed";
+                c.style.top = "-8px";
+                c.style.right = "163px";
+            }
+        }
+    }
+});
+
+document.addEventListener("readystatechange", function () {
+    if (document.readyState === "interactive") {
+
+        const page = window.location.pathname;
+
+        if (page.includes("cultivares") ||
+            page.includes("index") ||
+            page.includes("ordens") || 
+            page.includes("ordens_minhas") || 
+            page.includes("ordens_todas") || 
+            page.includes("ordens_minhas")) {
+
+            const s = document.getElementById("settingsToggle");
+            const f = document.getElementById("feedbackToggle");
+            const c = document.getElementById("cursorToggle");
+
+            // Aplica animação curta ANTES de mudar posição
+            const applySnapAnimation = (btn) => {
+                if (btn) {
+                    btn.style.transition = "all 0.0001s linear"; 
+                }
+            };
+
+            if (s) {
+                applySnapAnimation(s);
+                s.style.position = "fixed";
+                s.style.top = "8px";
+                s.style.right = "37px";
+            }
+
+            if (f) {
+                applySnapAnimation(f);
+                f.style.position = "fixed";
+                f.style.top = "8px";
+                f.style.right = "100px";
+            }
+            
+            if (c) {
+                applySnapAnimation(c);
+                c.style.position = "fixed";
+                c.style.top = "8px";
+                c.style.right = "163px";
+            }
+        }
+    }
+});
+
+/* === CONTROLE DE FONTE - COMPLETO === */
+function initFontControls() {
+    // Encontrar elementos de controle de fonte
+    const fontIncreaseBtn = document.getElementById("fontIncrease");
+    const fontDecreaseBtn = document.getElementById("fontDecrease");
+    const fontValueEl = document.getElementById("fontValue");
+    
+    if (!fontIncreaseBtn || !fontDecreaseBtn) return;
+    
+    // Tamanhos de fonte disponíveis (em pixels)
+    const fontSizes = [14, 15, 16, 17.5, 19, 21, 23];
+    const fontSizeKey = "fontSizeBase";
+    
+    // Verificar tamanho salvo
+    const savedFontSize = parseFloat(localStorage.getItem(fontSizeKey));
+    let currentFontIndex;
+    
+    if (savedFontSize) {
+        currentFontIndex = fontSizes.findIndex(size => size === savedFontSize);
+        if (currentFontIndex === -1) {
+            const closest = fontSizes.reduce((prev, curr) => {
+                return Math.abs(curr - savedFontSize) < Math.abs(prev - savedFontSize) ? curr : prev;
+            });
+            currentFontIndex = fontSizes.indexOf(closest);
+        }
+    } else {
+        currentFontIndex = 3; // 17.5px é o padrão (índice 3)
+    }
+    
+    // Atualizar display
+    function updateFontDisplay() {
+        const selectedSize = fontSizes[currentFontIndex];
+        const percent = Math.round((selectedSize / 17.5) * 100);
+        
+        if (fontValueEl) {
+            fontValueEl.textContent = `Tamanho: ${percent}%`;
+        }
+    }
+    
+    // Aplicar tamanho de fonte
+    function applyFontSize() {
+        const selectedSize = fontSizes[currentFontIndex];
+        document.documentElement.style.setProperty('--font-base', selectedSize + 'px');
+        localStorage.setItem(fontSizeKey, selectedSize.toString());
+        
+        // Forçar reflow
+        document.body.style.animation = 'none';
+        setTimeout(() => {
+            document.body.style.animation = '';
+        }, 10);
+    }
+    
+    // Configurar botões
+    fontIncreaseBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (currentFontIndex < fontSizes.length - 1) {
+            currentFontIndex++;
+            applyFontSize();
+            updateFontDisplay();
+        }
+    });
+    
+    fontDecreaseBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (currentFontIndex > 0) {
+            currentFontIndex--;
+            applyFontSize();
+            updateFontDisplay();
+        }
+    });
+    
+    // Inicializar
+    updateFontDisplay();
+    applyFontSize();
 }

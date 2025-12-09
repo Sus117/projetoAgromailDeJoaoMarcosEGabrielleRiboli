@@ -1,6 +1,78 @@
 {% extends 'base.html' %}
 {% block title %}Minhas Ordens — Ordens de Serviço{% endblock %}
 {% block content %}
+
+<!-- BARRA ENTRE NAVBAR E O CONTEÚDO -->
+<div class="barra"
+     style="
+       width: 81%;
+       background-color: #F0FFF0;
+       border: 3px solid #cc6600;
+       border-radius: 8px;
+       padding: 10px;
+       display: flex;
+       justify-content: center;
+       gap: 20px;
+       margin-bottom: 15px;
+       margin-top: 15px;
+       margin-left: auto;          /* centraliza */
+       margin-right: auto;         /* centraliza */
+     ">
+
+       <!-- ÍCONE DE MENU (lado esquerdo) -->
+  <a href="{{ url_for('index') }}" 
+   id="menu-icon"
+   style="
+     display: inline-block;
+     background-color: transparent;
+     border: none;
+     font-size: 35px;
+     color: #cc6600;
+     text-decoration: none;
+     margin-left: 25px;
+     cursor: pointer;
+     transition: 0.2s;
+     font-weight: bold;
+   "
+   onmouseover="this.style.color = document.body.classList.contains('dark-mode') ? '#cc6600' : '#fff'"
+   onmouseout="this.style.color = document.body.classList.contains('dark-mode') ? '#fff' : '#cc6600'">
+  <i class="fa fa-bars"></i>
+</a>
+
+  <!-- BOTÃO 1 -->
+  <a href="{{ url_for('ordens') }}" class="botao"
+     style="
+       display: inline-block;
+       background-color: #ccff33;
+       border: 3px solid #cc6600;
+       padding: 10px 20px;
+       font-size: 19px;
+       border-radius: 8px;
+       text-decoration: none;
+       color: #cc6600;
+       transition: 0.2s;
+     ">
+    Abrir Ordens De Serviço
+  </a>
+
+  <!-- BOTÃO 2 -->
+  <a href="{{ url_for('ordens_minhas') }}" class="botao"
+     style="
+       display: inline-block;
+       background-color: #ccff33;
+       border: 3px solid #cc6600;
+       padding: 10px 20px;
+       font-size: 19px;
+       border-radius: 8px;
+       text-decoration: none;
+       color: #cc6600;
+       transition: 0.2s;
+     ">
+    Vizualizar Minhas Próprias Ordens
+  </a>
+
+</div>
+
 <section class="card">
   <h1>Chamados abertos</h1>
   <table class="table">
@@ -62,7 +134,150 @@
     </tbody>
   </table>
   <div class="form-actions">
-    <a class="button" href="{{ url_for('ordens') }}">Abrir nova ordem</a>
+   <a class="button" href="{{ url_for('ordens') }}"
+   style="margin-top: 17px; margin-bottom: 1px; margin-left: 757px;">
+   Abrir nova ordem
+</a>
+
   </div>
 </section>
-{% endblock %} 
+
+<!-- SCRIPT: sincroniza barra/botões com o tema e integra com os botões de configuração -->
+<script>
+(function() {
+  // Aplica estilos da barra e botões conforme o estado atual de body.dark-mode
+  function applyThemeToBar() {
+    const barra = document.querySelector('.barra');
+    if (!barra) return;
+    const botoes = barra.querySelectorAll('.botao');
+    const isDark = document.body.classList.contains('dark-mode');
+
+    if (isDark) {
+      barra.style.backgroundColor = '#1D3E5E';
+      barra.style.border = '3px solid #fff';
+      botoes.forEach(btn => {
+        btn.style.backgroundColor = '#8e44ad';
+        btn.style.border = '3px solid #fff';
+        btn.style.color = '#fff';
+        btn.onmouseover = function () {
+          this.style.backgroundColor = '#ccff33';
+          this.style.color = '#cc6600';
+          this.style.borderColor = '#cc6600';
+        };
+        btn.onmouseout = function () {
+          this.style.backgroundColor = '#8e44ad';
+          this.style.color = '#fff';
+          this.style.borderColor = '#fff';
+        };
+      });
+    } else {
+      barra.style.backgroundColor = '#F0FFF0';
+      barra.style.border = '3px solid #cc6600';
+      botoes.forEach(btn => {
+        btn.style.backgroundColor = '#ccff33';
+        btn.style.border = '3px solid #cc6600';
+        btn.style.color = '#cc6600';
+        btn.onmouseover = function () {
+          this.style.backgroundColor = '#8e44ad';
+          this.style.color = '#fff';
+          this.style.borderColor = '#cc6600';
+        };
+        btn.onmouseout = function () {
+          this.style.backgroundColor = '#ccff33';
+          this.style.color = '#cc6600';
+          this.style.borderColor = '#cc6600';
+        };
+      });
+    }
+  }
+
+  // Observa mudanças na classe do body para reagir quando o tema mudar em qualquer parte da app
+  const observer = new MutationObserver(() => applyThemeToBar());
+  observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+  // Integra com os botões de configuração do painel (lightMode/darkMode)
+  function waitForSettingsButtons() {
+    const light = document.getElementById('lightMode');
+    const dark = document.getElementById('darkMode');
+    if (light && dark) {
+      // Reforça handlers: quando clicados, atualizam body e barra
+      light.onclick = function() {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light');
+        // Atualiza estado visual dos botões do painel
+        light.classList.add('active');
+        dark.classList.remove('active');
+        applyThemeToBar();
+      };
+      dark.onclick = function() {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+        dark.classList.add('active');
+        light.classList.remove('active');
+        applyThemeToBar();
+      };
+
+      // Aplica tema salvo imediatamente
+      const saved = localStorage.getItem('theme') || 'light';
+      if (saved === 'dark') {
+        document.body.classList.add('dark-mode');
+        dark.classList.add('active');
+        light.classList.remove('active');
+      } else {
+        document.body.classList.remove('dark-mode');
+        light.classList.add('active');
+        dark.classList.remove('active');
+      }
+      applyThemeToBar();
+      return true;
+    }
+    return false;
+  }
+
+  // Tenta encontrar os botões de configuração; se ainda não renderizaram, re-tenta
+  function init() {
+    if (!waitForSettingsButtons()) {
+      const retry = setInterval(() => {
+        if (waitForSettingsButtons()) clearInterval(retry);
+      }, 150);
+      // Fallback: aplica tema salvo mesmo antes dos botões existirem
+      const saved = localStorage.getItem('theme') || 'light';
+      if (saved === 'dark') document.body.classList.add('dark-mode');
+      else document.body.classList.remove('dark-mode');
+      applyThemeToBar();
+    }
+  }
+
+  // Inicializa ao carregar
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+document.addEventListener('DOMContentLoaded', function() {
+    const menuIcon = document.getElementById('menu-icon');
+    if (document.body.classList.contains('dark-mode')) {
+        menuIcon.style.color = '#fff';
+    } else {
+        menuIcon.style.color = '#cc6600';
+    }
+    
+    // Observa mudanças de tema
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.attributeName === 'class') {
+                if (document.body.classList.contains('dark-mode')) {
+                    menuIcon.style.color = '#fff';
+                } else {
+                    menuIcon.style.color = '#cc6600';
+                }
+            }
+        });
+    });
+    observer.observe(document.body, { attributes: true });
+});
+</script>
+
+{% endblock %}

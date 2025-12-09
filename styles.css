@@ -315,7 +315,8 @@ body.dark-mode .table th {
 
 .settings-btn {
     position: fixed;
-   
+    top: 12px;
+    right: 7px;
     background-color: var(--primary);
     border: 2.75px solid var(--border);
     border-radius: 8px; /* alterado — agora quadrado com leve arredondamento */
@@ -340,15 +341,6 @@ body.dark-mode .table th {
     color: var(--text);
 }
 
-/* CORREÇÃO: Hover do ícone do botão de configurações */
-body:not(.dark-mode) .settings-btn:hover i {
-    color: var(--branco) !important;
-}
-
-body.dark-mode .settings-btn:hover i {
-    color: var(--pardo) !important;
-}
-
 /* PAINEL DE CONFIGURAÇÕES */
 .theme-settings {
     position: fixed;
@@ -366,7 +358,7 @@ body.dark-mode .settings-btn:hover i {
     pointer-events: none;
     transform: translateX(20px);
     transition: all 0.3s ease;
-    z-index: 1001;
+    z-index: 1000;
 }
 
 .theme-settings.active {
@@ -405,7 +397,7 @@ body.dark-mode .settings-btn:hover i {
 
 .mode-btn.dark {
     background: var(--preto);
-    border-color: var(--branco);
+    border-color: var(--bege);
 }
 
 .mode-btn:hover, .mode-btn.active {
@@ -417,7 +409,7 @@ body.dark-mode .settings-btn:hover i {
 .brightness-control {
     margin-top: 20px;
     padding-top: 20px;
-    border-top: 2.75px solid var(--border);
+    border-top: 2.75px solid var(--border); /* Adicionado border-width */
 }
 
 .brightness-control h5 {
@@ -433,10 +425,9 @@ body.dark-mode .settings-btn:hover i {
     margin-bottom: 15px;
 }
 
-/* BOTÕES DE BRILHO REFEITOS */
 .brightness-btn {
-    background: var(--verde);
-    border: 2.75px solid var(--pardo);
+    background: var(--primary);
+    border: 2.75px solid var(--border); /* Adicionado border-width */
     border-radius: 6px;
     width: 36px;
     height: 36px;
@@ -446,46 +437,20 @@ body.dark-mode .settings-btn:hover i {
     cursor: pointer;
     font-weight: bold;
     font-size: 1.1rem;
-    transition: all 0.3s;
-    color: var(--pardo);
+    transition: all 0.2s;
+    color: var(--text);
 }
 
-/* Tema claro - estado normal (já está acima) */
-
-/* Tema claro - hover */
-body:not(.dark-mode) .brightness-btn:hover {
-    background: var(--roxo) !important;
-    color: var(--pardo) !important;
-    border: 2.75px solid var(--pardo) !important;
-}
-
-body:not(.dark-mode) .brightness-btn:hover i {
-    color: var(--pardo) !important;
-}
-
-/* Tema escuro - estado normal */
-body.dark-mode .brightness-btn {
-    background: var(--roxo) !important;
-    border: 2.75px solid var(--branco) !important;
-    color: var(--branco) !important;
-}
-
-/* Tema escuro - hover */
-body.dark-mode .brightness-btn:hover {
-    background: var(--verde) !important;
-    border: 2.75px solid var(--pardo) !important;
-    color: var(--pardo) !important;
-}
-
-body.dark-mode .brightness-btn:hover i {
-    color: var(--pardo) !important;
+.brightness-btn:hover {
+    background: var(--hover);
+    transform: scale(1.15);
 }
 
 .brightness-slider {
     flex: 1;
     height: 10px;
     background: var(--panel);
-    border: 2.75px solid var(--border);
+    border: 2.75px solid var(--border); /* Adicionado border-width */
     border-radius: 6px;
     outline: none;
 }
@@ -495,7 +460,7 @@ body.dark-mode .brightness-btn:hover i {
     width: 24px;
     height: 24px;
     background: var(--primary);
-    border: 2.75px solid var(--border);
+    border: 2.75px solid var(--border); /* Adicionado border-width */
     border-radius: 50%;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -505,7 +470,7 @@ body.dark-mode .brightness-btn:hover i {
     width: 24px;
     height: 24px;
     background: var(--primary);
-    border: 2.75px solid var(--border);
+    border: 2.75px solid var(--border); /* Adicionado border-width */
     border-radius: 50%;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -529,7 +494,7 @@ body.dark-mode .brightness-btn:hover i {
 .font-control {
     margin-top: 20px;
     padding-top: 20px;
-    border-top: 2.75px solid var(--border);
+    border-top: 2.75px solid var(--border); /* Adicionado border-width */
 }
 
 .font-control h5 {
@@ -546,10 +511,9 @@ body.dark-mode .brightness-btn:hover i {
     margin-bottom: 15px;
 }
 
-/* BOTÕES DE FONTE REFEITOS */
 .font-btn {
-    background: var(--verde);
-    border: 2.75px solid var(--pardo);
+    background: var(--primary);
+    border: 2.75px solid var(--border); /* Adicionado border-width */
     border-radius: 6px;
     width: 36px;
     height: 36px;
@@ -559,39 +523,13 @@ body.dark-mode .brightness-btn:hover i {
     cursor: pointer;
     font-weight: bold;
     font-size: 1.1rem;
-    transition: all 0.3s;
-    color: var(--pardo);
+    transition: all 0.2s;
+    color: var(--text);
 }
 
-/* Tema claro - estado normal (já está acima) */
-
-/* Tema claro - hover */
-body:not(.dark-mode) .font-btn:hover {
-    background: var(--roxo) !important;
-    color: var(--pardo) !important;
-    border: 2.75px solid var(--pardo) !important;
-}
-
-body:not(.dark-mode) .font-btn:hover i {
-    color: var(--pardo) !important;
-}
-
-/* Tema escuro - estado normal */
-body.dark-mode .font-btn {
-    background: var(--roxo) !important;
-    border: 2.75px solid var(--branco) !important;
-    color: var(--branco) !important;
-}
-
-/* Tema escuro - hover */
-body.dark-mode .font-btn:hover {
-    background: var(--verde) !important;
-    border: 2.75px solid var(--pardo) !important;
-    color: var(--pardo) !important;
-}
-
-body.dark-mode .font-btn:hover i {
-    color: var(--pardo) !important;
+.font-btn:hover {
+    background: var(--hover);
+    transform: scale(1.15);
 }
 
 .font-value {
@@ -615,7 +553,7 @@ body.dark-mode .font-btn:hover i {
 .auth-control {
     margin-top: 20px;
     padding-top: 20px;
-    border-top: 2.75px solid var(--border);
+    border-top: 2.75px solid var(--border); /* Adicionado border-width */
 }
 
 .auth-control h5 {
@@ -633,7 +571,7 @@ body.dark-mode .font-btn:hover i {
 
 .auth-btn {
     background: var(--primary);
-    border: 2.75px solid var(--border);
+    border: 2.75px solid var(--border); /* Adicionado border-width */
     border-radius: 6px;
     padding: 10px;
     color: var(--text);
@@ -650,33 +588,13 @@ body.dark-mode .font-btn:hover i {
     color: var(--hover-text);
 }
 
-/* CORREÇÃO PARA AUTH-BTN NO TEMA CLARO */
-body:not(.dark-mode) .auth-btn:hover {
-    background: var(--roxo) !important;
-    color: var(--branco) !important;
-}
-
-body:not(.dark-mode) .auth-btn:hover i {
-    color: var(--branco) !important;
-}
-
-/* CORREÇÃO PARA AUTH-BTN NO TEMA ESCURO */
-body.dark-mode .auth-btn:hover {
-    background: var(--verde) !important;
-    color: var(--pardo) !important;
-}
-
-body.dark-mode .auth-btn:hover i {
-    color: var(--pardo) !important;
-}
-
 /* Estilo para quando o usuário está logado */
 .auth-status {
     font-size: 0.9rem;
     margin-bottom: 10px;
     padding: 8px;
     background: var(--panel);
-    border: 2.75px solid var(--border);
+    border: 2.75px solid var(--border); /* Adicionado border-width */
     border-radius: 4px;
 }
 
@@ -711,9 +629,15 @@ body:not(.dark-mode) .settings-btn:hover {
     background-color: var(--roxo);
 }
 
-/* CORREÇÃO: ícone do settings-btn no tema claro */
-body:not(.dark-mode) .settings-btn:hover i {
-    color: var(--branco) !important;
+body:not(.dark-mode) .auth-btn:hover {
+    background: var(--roxo);
+    color: var(--branco);
+}
+
+body .settings-btn:hover i,
+body .brightness-btn:hover,
+body .font-btn:hover {
+    color: var(--bege) !important;
 }
 
 /* Tema Escuro - Hovers específicos */
@@ -723,20 +647,35 @@ body.dark-mode .menu a:hover {
 
 body.dark-mode .button:hover {
     background: var(--verde);
-    color: var(--pardo);
+    color: var(--preto);
 }
 
 body.dark-mode .button.secondary:hover {
     background: var(--verde);
-    color: var(--pardo);
+    color: var(--preto);
 }
 
 body.dark-mode .settings-btn:hover {
     background-color: var(--verde);
 }
 
-/* CORREÇÃO: ícone do settings-btn no tema escuro */
-body.dark-mode .settings-btn:hover i {
+body.dark-mode .auth-btn:hover {
+    background: var(--verde);
+    color: var(--preto);
+}
+
+body.dark-mode .brightness-btn:hover {
+    background: var(--verde);
+}
+
+body.dark-mode .font-btn:hover {
+    background: var(--verde);
+}
+
+body.dark-mode .settings-btn:hover i,
+body.dark-mode .brightness-btn:hover,
+body.dark-mode .font-btn:hover, 
+body.dark-mode .auth-btn:hover {
     color: var(--pardo) !important;
 }
 
@@ -748,7 +687,7 @@ body:not(.dark-mode) .mode-btn.light {
 
 body:not(.dark-mode) .mode-btn.dark {
     background: var(--preto);
-    border-color: var(--branco);
+    border-color: var(--bege);
 }
 
 body.dark-mode .mode-btn.light {
@@ -758,7 +697,7 @@ body.dark-mode .mode-btn.light {
 
 body.dark-mode .mode-btn.dark {
     background: var(--preto);
-    border-color: var(--branco);
+    border-color: var(--bege);
 }
 
 /* Estilo para botões iguais (form-actions) */
@@ -778,7 +717,7 @@ body.dark-mode .mode-btn.dark {
     font-size: 20px;
     font-weight: 500;
     text-decoration: none;
-    border: 2.75px solid var(--border);
+    border: 2.75px solid var(--border); /* Adicionado border-width */
 }
 
 /* Layout geral */
@@ -877,37 +816,6 @@ body.dark .button.menu-btn:hover {
   background-color: var(--verde);
 }
 
-.settings-btn:hover i,
-body:not(.dark-mode) .brightness-btn:hover i,
-body:not(.dark-mode) .font-btn:hover i {
-    color: var(--pardo);
-}
-
-body.dark-mode .brightness-btn:hover,
-body.dark-mode .font-btn:hover,
-body.dark-mode .auth-btn:hover {
-    color: var(--pardo);
-}
-
-body.dark-mode .settings-btn:hover i,
-body.dark-mode .brightness-btn:hover i,
-body.dark-mode .font-btn:hover i,
-body.dark-mode .auth-btn:hover i {
-    color: var(--pardo);
-}
-
-body.dark-mode .feedback-btn:hover i {
-    color: var(--pardo);
-}
-
-body.dark-mode .feedback-btn:hover {
-    border-color: var(--pardo);
-}
-
-body.dark-mode .settings-btn:hover {
-    border-color: var(--pardo);
-}
-
 /* ------------------------------------------------------------- */
 /*                     BOTÃO DE RECLAMAÇÕES                      */
 /* ------------------------------------------------------------- */
@@ -945,14 +853,10 @@ body:not(.dark-mode) .feedback-btn:hover {
     color: var(--branco);
 }
 
-body:not(.dark-mode) .feedback-btn:hover i {
-    color: var(--branco);
-}
-
 /* Tema Escuro - Hover do botão de reclamações */
 body.dark-mode .feedback-btn:hover {
     background: var(--verde);
-    color: var(--pardo);
+    color: var(--preto);
 }
 
 /* ------------------------------------------------------------- */
@@ -960,6 +864,8 @@ body.dark-mode .feedback-btn:hover {
 /* ------------------------------------------------------------- */
 .feedback-panel {
     position: fixed;
+    top: 110px;
+    right: 30px;
     background-color: var(--panel);
     border: 2.75px solid var(--border);
     color: var(--text);
@@ -1078,7 +984,7 @@ body:not(.dark-mode) .btn-cancel:hover {
 body.dark-mode .btn-submit:hover,
 body.dark-mode .btn-cancel:hover {
     background: var(--verde);
-    color: var(--pardo);
+    color: var(--preto);
 }
 
 /* MENSAGEM DE STATUS */
@@ -1167,17 +1073,4 @@ body.dark-mode .btn-cancel:hover {
         padding: 10px;
         font-size: 0.9em;
     }
-}
-
-/* Tema Escuro - Bordas pardo em hover de todos os botões */
-body.dark-mode .settings-btn:hover,
-body.dark-mode .brightness-btn:hover,
-body.dark-mode .font-btn:hover,
-body.dark-mode .auth-btn:hover,
-body.dark-mode .feedback-btn:hover,
-body.dark-mode .btn-submit:hover,
-body.dark-mode .btn-cancel:hover,
-body.dark-mode .button:hover,
-body.dark-mode .button.menu-btn:hover {
-    border-color: var(--pardo) !important;
 }

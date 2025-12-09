@@ -10,907 +10,1930 @@
     
     <style>
         :root {
-            /* CORES DO PROJETO: */
-            --mana:#F0FFF0; /*Tonalidade: Maná*/ /*cor dos cards no tema claro*/
-            --pardo:#CC6600; /*Tonalidade: Pardo-Escuro*/ /*cor de bordas e fontes no tema claro*/
-            --turquesa:#9fe3dd; /*Tonalidade: Turquesa Claro*/  /*cor predominante do fundo no tema claro*/
-            --verde:#CCFF33; /*Tonalidade: Verde-Fluorescente*/ /*cor dos botões no tema claro, cor do hover no tema escuro*/
-
-            --azul:#1D3E5E; /*Tonalidade: Azul-Marinho-Escuro-*/ /*cor dos cards no tema escuro*/
-            --bege:#ddd9ce; /*Tonalidade: Bege-Claro*/ /*cor de bordas e fontes no tema escuro*/
-            --preto:#0A1A2F; /*Tonalidade: Preto-Azulado*/ /*cor predominante do fundo no tema escuro*/
-            --roxo: #8e44ad;/*Tonalidade: Roxo*/ /*cor dos botões no tema escuro, a cor do hover no tema claro*/
-
-            /* CORES ADICIONAIS PARA ESTADOS */
-            --branco: #ffffff;
-            --laranja: #ff6b35;
-
-            /* TEMA CLARO (PADRÃO) */
-            --bg: var(--turquesa);
-            --panel: var(--mana);
-            --text: var(--pardo);
-            --muted: var(--pardo);
-            --primary: var(--verde);
-            --border: var(--pardo);
-            --hover: var(--roxo);
-            --hover-text: var(--pardo);
-
-            --brightness: 100%;
-            --font-base: 17.5px; /* Tamanho base alterável - usado em body */
-        }
-
-        /* TEMA ESCURO */
-        body.dark-mode {
-            --bg: var(--preto);
-            --panel: var(--azul);
-            --text: var(--bege);
-            --muted: var(--bege);
-            --primary: var(--roxo);
-            --border: var(--bege);
-            --hover: var(--verde);
-            --hover-text: var(--bege);
-        }
-
-        body.dark-mode .primary:hover {
-            color: var(--pardo);
-        }
-
-        /* RESET */
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            transition: background 0.3s, color 0.3s, filter 0.3s;
-            filter: brightness(var(--brightness));
-            font-size: var(--font-base);
-            position: relative;
-            min-height: 100vh;
-        }
-
-        /* CONTAINER */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 16px;
-        }
-
-        /* BUTTONS */
-        .button {
-            display: inline-block;
-            padding: 0.571em 0.8em;
-            border-radius: 6px;
-            background: var(--primary);
-            color: var(--text);
-            font-weight: 600;
-            border: 2.75px solid var(--border);
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1em;
-        }
-
-        .button:hover {
-            background: var(--hover);
-            color: var(--hover-text);
-        }
-
-        /* ------------------------------------------------------------- */
-        /*                     BOTÃO DE CONFIGURAÇÕES                    */
-        /* ------------------------------------------------------------- */
-
-        .settings-btn {
-            position: fixed;
-            top: 12px;
-            right: 7px;
-            background-color: var(--primary);
-            border: 2.75px solid var(--border);
-            border-radius: 8px;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            z-index: 1001;
-        }
-
-        .settings-btn:hover {
-            transform: scale(1.1) rotate(30deg);
-            background-color: var(--hover);
-        }
-
-        .settings-btn i {
-            font-size: 28px;
-            color: var(--text);
-        }
-
-        /* ------------------------------------------------------------- */
-        /*                     BOTÃO DE RECLAMAÇÕES                      */
-        /* ------------------------------------------------------------- */
-        .feedback-btn {
-            position: fixed;
-            top: 12px;
-            right: 70px;
-            background-color: var(--primary);
-            border: 2.75px solid var(--border);
-            border-radius: 8px;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            z-index: 1001;
-        }
-
-        .feedback-btn:hover {
-            transform: scale(1.1) rotate(-15deg);
-            background-color: var(--hover);
-        }
-
-        .feedback-btn i {
-            font-size: 26px;
-            color: var(--text);
-        }
-
-        /* ------------------------------------------------------------- */
-        /*                     BOTÃO "SOBRE NÓS"                         */
-        /* ------------------------------------------------------------- */
-        .info-icon-container {
-            position: fixed;
-            top: 1150px;
-            left: 40px;
-            z-index: 1002;
-        }
-
-        .info-icon {
-            background: var(--primary);
-            color: var(--text);
-            border: 2.75px solid var(--border);
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 28px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        }
-
-        .info-icon:hover {
-            transform: scale(1.1);
-            background: var(--hover);
-        }
-
-        /* Tema Claro - Hover dos botões */
-        body:not(.dark-mode) .info-icon:hover,
-        body:not(.dark-mode) .feedback-btn:hover {
-            background: var(--roxo);
-            color: var(--branco);
-        }
-
-        /* Tema Escuro - Hover dos botões */
-        body.dark-mode .info-icon:hover,
-        body.dark-mode .feedback-btn:hover {
-            background: var(--verde);
-            color: var(--preto);
-        }
-
-        /* ------------------------------------------------------------- */
-        /*                     PAINEL DE RECLAMAÇÕES                     */
-        /* ------------------------------------------------------------- */
-        .feedback-panel {
-            position: fixed;
-            top: 110px;
-            right: 30px;
-            background-color: var(--panel);
-            border: 2.75px solid var(--border);
-            color: var(--text);
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-            padding: 25px;
-            width: 400px;
-            text-align: center;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateX(20px);
-            transition: all 0.3s ease;
-            z-index: 1001;
-        }
-
-        .feedback-panel.active {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateX(0);
-        }
-
-        .feedback-panel h3 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            font-weight: 800;
-        }
-
-        /* FORMULÁRIO DE RECLAMAÇÃO */
-        .feedback-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .form-group {
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 2.75px solid var(--border);
-            border-radius: 6px;
-            background: var(--panel);
-            color: var(--text);
-            font-family: inherit;
-            font-size: 1em;
-            box-sizing: border-box;
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .form-group select {
-            cursor: pointer;
-        }
-
-        /* BOTÕES DO FORMULÁRIO */
-        .form-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .form-buttons button {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-submit {
-            background: var(--primary);
-            color: var(--text);
-            border: 2.75px solid var(--border) !important;
-        }
-
-        .btn-cancel {
-            background: var(--panel);
-            color: var(--text);
-            border: 2.75px solid var(--border) !important;
-        }
-
-        .btn-submit:hover {
-            background: var(--hover);
-            color: var(--hover-text);
-        }
-
-        .btn-cancel:hover {
-            background: var(--hover);
-            color: var(--hover-text);
-        }
-
-        /* MENSAGEM DE STATUS */
-        .status-message {
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 6px;
-            font-weight: 600;
-            display: none;
-        }
-
-        .status-success {
-            background: rgba(72, 187, 120, 0.2);
-            border: 1px solid #48bb78;
-            color: #48bb78;
-        }
-
-        .status-error {
-            background: rgba(245, 101, 101, 0.2);
-            border: 1px solid #f56565;
-            color: #f56565;
-        }
-
-        /* LOADING SPINNER */
-        .loading-spinner {
-            display: none;
-            border: 3px solid rgba(0,0,0,0.1);
-            border-radius: 50%;
-            border-top: 3px solid var(--primary);
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 10px auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* MODAL PERSONALIZADO PARA "SOBRE NÓS" */
-        .about-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-
-        .about-modal {
-            background-color: var(--panel);
-            border: 2.75px solid var(--border);
-            border-radius: 12px;
-            width: 90%;
-            max-width: 800px;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            animation: modalFadeIn 0.3s ease;
-            color: var(--text);
-        }
-
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .about-modal-header {
-            padding: 20px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: var(--primary);
-            border-radius: 10px 10px 0 0;
-        }
-
-        .about-modal-header h3 {
-            margin: 0;
-            color: var(--text);
-            font-size: 1.4em;
-        }
-
-        .close-about-btn {
-            background: none;
-            border: none;
-            font-size: 28px;
-            color: var(--text);
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .close-about-btn:hover {
-            background-color: rgba(0,0,0,0.1);
-            transform: rotate(90deg);
-        }
-
-        .about-modal-body {
-            padding: 20px;
-        }
-
-        /* ------------------------------------------------------------- */
-        /*                     PAINEL DE CONFIGURAÇÕES                   */
-        /* ------------------------------------------------------------- */
-        .theme-settings {
-            position: fixed;
-            top: 110px;
-            right: 30px;
-            background-color: var(--panel);
-            border: 2.75px solid var(--border);
-            color: var(--text);
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-            padding: 25px;
-            width: 350px;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateX(20px);
-            transition: all 0.3s ease;
-            z-index: 1001;
-        }
-
-        .theme-settings.active {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateX(0);
-        }
-
-        .theme-settings h3 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            font-weight: 800;
-            text-align: center;
-        }
-
-        /* MODOS DE TEMA */
-        .mode-options {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 10px;
-            margin-bottom: 25px;
-        }
-
-        .mode-btn {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .mode-btn.light {
-            background: var(--turquesa);
-            border-color: var(--pardo);
-        }
-
-        .mode-btn.dark {
-            background: var(--preto);
-            border-color: var(--bege);
-        }
-
-        .mode-btn:hover, .mode-btn.active {
-            border-color: var(--primary);
-            transform: scale(1.1);
-        }
-
-        /* CONTROLE DE BRILHO */
-        .brightness-control {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px solid var(--border);
-        }
-
-        .brightness-control h5 {
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .brightness-slider-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 10px;
-        }
-
-        .brightness-btn {
-            background: var(--primary);
-            border: 2px solid var(--border);
-            border-radius: 6px;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.2s;
-            color: var(--text);
-        }
-
-        .brightness-btn:hover {
-            background: var(--hover);
-            transform: scale(1.1);
-        }
-
-        .brightness-slider {
-            flex: 1;
-            height: 8px;
-            background: var(--panel);
-            border: 2px solid var(--border);
-            border-radius: 4px;
-            outline: none;
-            -webkit-appearance: none;
-        }
-
-        .brightness-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 22px;
-            height: 22px;
-            background: var(--primary);
-            border: 2px solid var(--border);
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .brightness-slider::-moz-range-thumb {
-            width: 22px;
-            height: 22px;
-            background: var(--primary);
-            border: 2px solid var(--border);
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .brightness-value {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-top: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .brightness-icon {
-            font-size: 1rem;
-        }
-
-        /* CONTROLE DE FONTE */
-        .font-control {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 2px solid var(--border);
-        }
-
-        .font-control h5 {
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .font-control-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-
-        .font-btn {
-            background: var(--primary);
-            border: 2px solid var(--border);
-            border-radius: 6px;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1.2rem;
-            transition: all 0.2s;
-            color: var(--text);
-        }
-
-        .font-btn:hover {
-            background: var(--hover);
-            transform: scale(1.1);
-        }
-
-        .font-value {
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-top: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .font-icon {
-            font-size: 1rem;
-        }
-
-        /* AJUSTES ESPECÍFICOS PARA CORRESPONDÊNCIA ENTRE TEMAS */
-
-        /* Tema Claro - Hovers específicos */
-        body:not(.dark-mode) .button:hover {
-            background: var(--roxo);
-            color: var(--branco);
-        }
-
-        body:not(.dark-mode) .settings-btn:hover,
-        body:not(.dark-mode) .feedback-btn:hover {
-            background-color: var(--roxo);
-        }
-
-        body:not(.dark-mode) .btn-submit:hover,
-        body:not(.dark-mode) .btn-cancel:hover {
-            background: var(--roxo);
-            color: var(--branco);
-        }
-
-        body:not(.dark-mode) .brightness-btn:hover,
-        body:not(.dark-mode) .font-btn:hover {
-            background: var(--roxo);
-        }
-
-        /* Tema Escuro - Hovers específicos */
-        body.dark-mode .button:hover {
-            background: var(--verde);
-            color: var(--preto);
-        }
-
-        body.dark-mode .settings-btn:hover,
-        body.dark-mode .feedback-btn:hover {
-            background-color: var(--verde);
-        }
-
-        body.dark-mode .btn-submit:hover,
-        body.dark-mode .btn-cancel:hover {
-            background: var(--verde);
-            color: var(--preto);
-        }
-
-        body.dark-mode .brightness-btn:hover,
-        body.dark-mode .font-btn:hover {
-            background: var(--verde);
-        }
-
-        /* ============================================= */
-        /* ESTILOS ESPECÍFICOS DA PÁGINA INICIAL */
-        /* ============================================= */
-        
-        body.pagina-inicial {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .title-1 {
-            font-size: 68px;
-            font-weight: bold;
-            margin: 0;
-            line-height: 60px;
-            color: var(--text);
-        }
-
-        .subtitle {
-            font-size: 20px;
-            margin-top: 10px;
-            color: var(--text);
-        }
-
-        .helper {
-            font-size: 18px;
-            margin-top: 5px;
-            margin-bottom: 30px;
-            color: var(--muted);
-        }
-
-        .main-btn {
-            display: inline-block;
-            padding: 15px 40px;
-            font-size: 22px;
-            border-radius: 10px;
-            background: var(--primary);
-            color: var(--text);
-            font-weight: 600;
-            border: 2.75px solid var(--border);
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-        }
-
-        .main-btn:hover {
-            background: var(--hover);
-            color: var(--hover-text);
-            transform: scale(1.05);
-        }
-
-        body:not(.dark-mode) .main-btn:hover {
-            background: var(--roxo);
-            color: var(--branco);
-        }
-
-        body.dark-mode .main-btn:hover {
-            background: var(--verde);
-            color: var(--preto);
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0; 
-            left: 0;
-            width: 100%; 
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1500;
-        }
-
-        .modal {
-            background: var(--panel);
-            border: 2.75px solid var(--border);
-            color: var(--text);
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-            width: 300px;
-            animation: fadeIn 0.25s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            z-index: 1501;
-            font-size: 1em;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to   { opacity: 1; transform: scale(1); }
-        }
-
-        .modal h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        .option-btn {
-            width: 100%;
-            padding: 12px;
-            font-size: 18px;
-            margin: 10px 0;
-            border: 2.75px solid var(--border);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: block;
-            font-weight: 600;
-            background: var(--primary);
-            color: var(--text);
-        }
-
-        .option-btn:hover {
-            background: var(--hover);
-            color: var(--hover-text);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        body:not(.dark-mode) .option-btn:hover {
-            background: var(--roxo);
-            color: var(--branco);
-        }
-
-        body.dark-mode .option-btn:hover {
-            background: var(--verde);
-            color: var(--preto);
-        }
-
-        .logo-container {
-            margin-bottom: 20px;
-        }
-
-        .logo-icon {
-            font-size: 50px;
-            color: var(--text);
-            margin-bottom: 10px;
-        }
-
-        /* Responsividade */
-        @media (max-width: 768px) {
-            .title-1 {
-                font-size: 48px;
-            }
-            .main-btn {
-                padding: 12px 30px;
-                font-size: 18px;
-            }
-            .modal {
-                width: 90%;
-                max-width: 300px;
-            }
-            .theme-settings {
-                width: 90%;
-                max-width: 300px;
-                right: 5%;
-                padding: 20px;
-            }
-            .feedback-panel {
-                width: 90%;
-                max-width: 350px;
-                right: 5%;
-                padding: 20px;
-            }
-            .info-icon-container {
-                top: 15px;
-                left: 15px;
-            }
-            .info-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 24px;
-            }
-            .about-modal {
-                width: 95%;
-                max-height: 85vh;
-            }
-            .settings-btn {
-                top: 12px;
-                right: 7px;
-            }
-            .feedback-btn {
-                top: 12px;
-                right: 70px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .settings-btn {
-                top: 10px;
-                right: 5px;
-                width: 45px;
-                height: 45px;
-            }
-            .feedback-btn {
-                top: 10px;
-                right: 60px;
-                width: 45px;
-                height: 45px;
-            }
-            .feedback-btn i,
-            .settings-btn i {
-                font-size: 24px;
-            }
-            .mode-btn {
-                width: 30px;
-                height: 30px;
-            }
-            .brightness-btn,
-            .font-btn {
-                width: 35px;
-                height: 35px;
-                font-size: 1rem;
-            }
-        }
+    /* CORES DO PROJETO: */
+    --mana:#F0FFF0; /*Tonalidade: Maná*/ /*cor dos cards no tema claro*/
+    --pardo:#CC6600; /*Tonalidade: Pardo-Escuro*/ /*cor de bordas e fontes no tema claro*/
+    --turquesa:#9fe3dd; /*Tonalidade: Turquesa Claro*/  /*cor predominante do fundo no tema claro*/
+    --verde:#CCFF33; /*Tonalidade: Verde-Fluorescente*/ /*cor dos botões no tema claro, cor do hover no tema escuro*/
+
+    --azul:#1D3E5E; /*Tonalidade: Azul-Marinho-Escuro-*/ /*cor dos cards no tema escuro*/
+    --branco: #fff; /*Tonalidade: Bege-Claro*/ /*cor de bordas e fontes no tema escuro*/
+    --preto:#0A1A2F; /*Tonalidade: Preto-Azulado*/ /*cor predominante do fundo no tema escuro*/
+    --roxo: #8e44ad;/*Tonalidade: Roxo*/ /*cor dos botões no tema escuro, a cor do hover no tema claro*/
+
+    /* CORES ADICIONAIS PARA ESTADOS */
+    --branco: #ffffff;
+    --laranja: #ff6b35;
+
+    /* TEMA CLARO (PADRÃO) */
+    --bg: var(--turquesa);
+    --panel: var(--mana);
+    --text: var(--pardo);
+    --muted: var(--pardo);
+    --primary: var(--verde);
+    --border: var(--pardo);
+    --hover: var(--roxo);
+    --hover-text: var(--branco);
+
+    --brightness: 100%;
+    --font-base: 17.5px; /* Alterado de 16.5px para 17.5px */
+}
+
+/* TEMA ESCURO */
+body.dark-mode {
+    --bg: var(--preto);
+    --panel: var(--azul);
+    --text: var(--branco);
+    --muted: var(--branco);
+    --primary: var(--roxo);
+    --border: var(--branco);
+    --hover: var(--verde);
+    --hover-text: var(--pardo);
+}
+
+body.dark-mode .primary:hover {
+    color: var(--pardo);
+}
+
+/* RESET */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s, color 0.3s, filter 0.3s;
+    filter: brightness(var(--brightness));
+    font-size: var(--font-base);
+    position: relative;
+    min-height: 100vh;
+}
+
+/* CONTAINER */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* NAVBAR */
+
+.navbar .container,
+.navbar .menu a,
+.brand {
+    font-size: 1.2rem; /* ajuste o valor como quiser */
+}
+
+.navbar {
+    background: var(--panel);
+    border-bottom: 2.75px solid var(--border); /* Adicionado border-width */
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+}
+
+.brand {
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    color: var(--text);
+}
+
+.menu {
+    list-style: none;
+    display: flex;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+.menu a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.menu a:hover {
+    color: var(--hover);
+}
+
+.menu a.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+   /* CARDS */
+
+.card.card-login {
+    background: var(--panel);
+    border: 2.75px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    position: relative; /* Isso permite mover o card em relação ao seu lugar de origem */
+    top: 350px; /* Desloca 50 pixels para baixo */
+    left: 0px; /* Desloca 20 pixels para a direita */
+    /* Mantenha ou ajuste as margens padrão, se necessário */
+    margin: 16px 0; /* (Valor padrão do seu styles.css) */
+}
+
+.card.card-signup {
+    background: var(--panel);
+    border: 2.75px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    position: relative; /* Isso permite mover o card em relação ao seu lugar de origem */
+    top: 350px; /* Desloca 50 pixels para baixo */
+    left: 0px; /* Desloca 20 pixels para a direita */
+    /* Mantenha ou ajuste as margens padrão, se necessário */
+    margin: 16px 0; /* (Valor padrão do seu styles.css) */
+}
+
+.card.card-inicio {
+ background: var(--panel);
+    border: 2.75px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    position: relative; /* Isso permite mover o card em relação ao seu lugar de origem */
+    top: 350px; /* Desloca 50 pixels para baixo */
+    left: 0px; /* Desloca 20 pixels para a direita */
+    /* Mantenha ou ajuste as margens padrão, se necessário */
+    margin: 16px 0; /* (Valor padrão do seu styles.css) */
+    padding: 60px 16px;
+    padding-bottom: 120px;
+}
+
+.card.card-inicio h1 {
+    /* Remove a margem superior padrão do h1 para que ele se 'cole' ao topo do card */
+    margin-top: 0;
+    margin-bottom: 1px; 
+    text-align: center;
+}
+
+/* Ajusta o espaçamento do parágrafo */
+.card.card-inicio p {
+    margin-bottom: 30px; 
+    text-align: center;
+}
+
+.card.card-inicio .grid {
+   
+   margin: 20px auto 0 auto; 
+   width: 65%;
+   justify-content: space-between;
+}
+
+/* Regra a ser adicionada no seu styles.css */
+.card.card-inicio .button {
+    /* Define a largura horizontal desejada */
+    width: 300px;
+    
+    /* Garante que o link se comporte como um bloco para que o width funcione */
+   
+    
+    /* Garante que o texto dentro do botão continue centralizado (útil se o texto for curto) */
+    text-align: center;
+}
+
+.card { /*Cards secundários*/
+    background: var(--panel);
+    border: 2.75px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 00%
+}
+
+/* FORM */
+.form {
+    display: grid;
+    gap: 12px;
+}
+
+.form-row {
+    display: grid;
+    gap: 6px;
+}
+
+.form-row label {
+    color: var(--text);
+    font-size: 14px;
+}
+
+.form-row input,
+.form-row select {
+    background: var(--panel);
+    color: var(--text);
+    border: 2.75px solid var(--border); /* Adicionado border-width */
+    border-radius: 6px;
+    padding: 10px;
+}
+
+/* BUTTONS */
+.button {
+    display: inline-block;
+    padding: 0.571em 0.8em;
+    border-radius: 6px;
+    background: var(--primary);
+    color: var(--text);
+    font-weight: 600;
+    border: 2.75px solid var(--border);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1em;
+}
+
+.button:hover {
+    background: var(--hover);
+    color: var(--hover-text);
+}
+
+.button.secondary {
+    display: inline-block;
+    padding: 10px 14px;
+    border-radius: 6px;
+    background: var(--primary);
+    color: var(--text);
+    font-weight: 600;
+    border: 2.75px solid var(--border); /* Adicionado border-width */
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.button.secondary:hover {
+    background: var(--hover);
+    color: var(--hover-text);
+}
+
+/* TABLE */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    border: 2.75px solid var(--border); /* Adicionado border-width */
+    padding: 8px;
+    text-align: left;
+    color: var(--text);
+}
+
+.table th {
+    font-weight: 600;
+    background: rgba(0,0,0,0.05);
+}
+
+body.dark-mode .table th {
+    background: rgba(255,255,255,0.1);
+}
+
+/* FLASH */
+.flash {
+    padding: 8px 10px;
+    border-radius: 6px;
+    margin: 8px 0;
+    color: var(--text);
+    border: 2.75px solid; /* Adicionado border-width */
+}
+
+.flash.success {
+    background: #3ab54a33;
+    border-color: #3ab54a;
+}
+
+.flash.warning {
+    background: #f59f3f33;
+    border-color: #f59f3f;
+}
+
+.flash.danger {
+    background: #ff333333;
+    border-color: #ff3333;
+}
+
+/* DESTACAR */
+.highlight-self {
+    background: #f59f3f44;
+}
+
+/* ------------------------------------------------------------- */
+/*                     BOTÃO DE CONFIGURAÇÕES                    */
+/* ------------------------------------------------------------- */
+
+.settings-btn {
+    position: fixed;
+    top: 8px; 
+    right: 37px; /*antes 7*/
+    background-color: var(--primary);
+    border: 2.75px solid var(--border);
+    border-radius: 8px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    z-index: 1001;
+}
+
+.settings-btn:hover {
+    transform: scale(1.1) rotate(30deg);
+    background-color: var(--hover);
+}
+
+.settings-btn i {
+    font-size: 28px;
+    color: var(--text);
+}
+
+/* CORREÇÃO: Hover do ícone do botão de configurações */
+body:not(.dark-mode) .settings-btn:hover i {
+    color: var(--branco) !important;
+}
+
+body.dark-mode .settings-btn:hover i {
+    color: var(--pardo) !important;
+}
+
+/* PAINEL DE CONFIGURAÇÕES */
+.theme-settings {
+    position: fixed;
+    top: 110px;
+    right: 30px;
+    background-color: var(--panel);
+    border: 2.75px solid var(--border);
+    color: var(--text);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    padding: 25px;
+    width: 350px;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.theme-settings.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+
+.theme-settings h3 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.mode-options {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.mode-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 4px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mode-btn.light {
+    background: var(--turquesa);
+    border-color: var(--pardo);
+}
+
+.mode-btn.dark {
+    background: var(--preto);
+    border-color: var(--branco);
+}
+
+.mode-btn:hover, .mode-btn.active {
+    border-color: var(--primary);
+    transform: scale(1.1);
+}
+
+/* CONTROLE DE BRILHO */
+.brightness-control {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2.75px solid var(--border);
+}
+
+.brightness-control h5 {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.brightness-slider-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+/* BOTÕES DE BRILHO REFEITOS */
+.brightness-btn {
+    background: var(--verde);
+    border: 2.75px solid var(--pardo);
+    border-radius: 6px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    color: var(--pardo);
+}
+
+/* Tema claro - estado normal (já está acima) */
+
+/* Tema claro - hover */
+body:not(.dark-mode) .brightness-btn:hover {
+    background: var(--roxo) !important;
+    color: var(--pardo) !important;
+    border: 2.75px solid var(--pardo) !important;
+}
+
+body:not(.dark-mode) .brightness-btn:hover i {
+    color: var(--pardo) !important;
+}
+
+/* Tema escuro - estado normal */
+body.dark-mode .brightness-btn {
+    background: var(--roxo) !important;
+    border: 2.75px solid var(--branco) !important;
+    color: var(--branco) !important;
+}
+
+/* Tema escuro - hover */
+body.dark-mode .brightness-btn:hover {
+    background: var(--verde) !important;
+    border: 2.75px solid var(--pardo) !important;
+    color: var(--pardo) !important;
+}
+
+body.dark-mode .brightness-btn:hover i {
+    color: var(--pardo) !important;
+}
+
+.brightness-slider {
+    flex: 1;
+    height: 10px;
+    background: var(--panel);
+    border: 2.75px solid var(--border);
+    border-radius: 6px;
+    outline: none;
+}
+
+.brightness-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    background: var(--primary);
+    border: 2.75px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.brightness-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background: var(--primary);
+    border: 2.75px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.brightness-value {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.brightness-icon {
+    font-size: 1.2rem;
+}
+
+/* CONTROLE DE FONTE */
+.font-control {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2.75px solid var(--border);
+}
+
+.font-control h5 {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.font-control-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+/* BOTÕES DE FONTE REFEITOS */
+.font-btn {
+    background: var(--verde);
+    border: 2.75px solid var(--pardo);
+    border-radius: 6px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    color: var(--pardo);
+}
+
+/* Tema claro - estado normal (já está acima) */
+
+/* Tema claro - hover */
+body:not(.dark-mode) .font-btn:hover {
+    background: var(--roxo) !important;
+    color: var(--pardo) !important;
+    border: 2.75px solid var(--pardo) !important;
+}
+
+body:not(.dark-mode) .font-btn:hover i {
+    color: var(--pardo) !important;
+}
+
+/* Tema escuro - estado normal */
+body.dark-mode .font-btn {
+    background: var(--roxo) !important;
+    border: 2.75px solid var(--branco) !important;
+    color: var(--branco) !important;
+}
+
+/* Tema escuro - hover */
+body.dark-mode .font-btn:hover {
+    background: var(--verde) !important;
+    border: 2.75px solid var(--pardo) !important;
+    color: var(--pardo) !important;
+}
+
+body.dark-mode .font-btn:hover i {
+    color: var(--pardo) !important;
+}
+
+.font-value {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.font-icon {
+    font-size: 1.2rem;
+}
+
+/* ------------------------------------------------------------- */
+/*              BOTÕES DE AUTENTICAÇÃO NO PAINEL                 */
+/* ------------------------------------------------------------- */
+
+.auth-control {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2.75px solid var(--border);
+}
+
+.auth-control h5 {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.auth-btn {
+    background: var(--primary);
+    border: 2.75px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+    color: var(--text);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+}
+
+.auth-btn:hover {
+    background: var(--hover);
+    color: var(--hover-text);
+}
+
+/* CORREÇÃO PARA AUTH-BTN NO TEMA CLARO */
+body:not(.dark-mode) .auth-btn:hover {
+    background: var(--roxo) !important;
+    color: var(--branco) !important;
+}
+
+body:not(.dark-mode) .auth-btn:hover i {
+    color: var(--branco) !important;
+}
+
+/* CORREÇÃO PARA AUTH-BTN NO TEMA ESCURO */
+body.dark-mode .auth-btn:hover {
+    background: var(--verde) !important;
+    color: var(--pardo) !important;
+}
+
+body.dark-mode .auth-btn:hover i {
+    color: var(--pardo) !important;
+}
+
+/* Estilo para quando o usuário está logado */
+.auth-status {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    padding: 8px;
+    background: var(--panel);
+    border: 2.75px solid var(--border);
+    border-radius: 4px;
+}
+
+.auth-status.logged-in {
+    background: #3ab54a33;
+    border-color: #3ab54a;
+}
+
+.auth-status.logged-out {
+    background: #f59f3f33;
+    border-color: #f59f3f;
+}
+
+/* AJUSTES ESPECÍFICOS PARA CORRESPONDÊNCIA ENTRE TEMAS */
+
+/* Tema Claro - Hovers específicos */
+body:not(.dark-mode) .menu a:hover {
+    color: var(--roxo);
+}
+
+body:not(.dark-mode) .button:hover {
+    background: var(--roxo);
+    color: var(--branco);
+}
+
+body:not(.dark-mode) .button.secondary:hover {
+    background: var(--roxo);
+    color: var(--branco);
+}
+
+body:not(.dark-mode) .settings-btn:hover {
+    background-color: var(--roxo);
+}
+
+/* CORREÇÃO: ícone do settings-btn no tema claro */
+body:not(.dark-mode) .settings-btn:hover i {
+    color: var(--branco) !important;
+}
+
+/* Tema Escuro - Hovers específicos */
+body.dark-mode .menu a:hover {
+    color: var(--verde);
+}
+
+body.dark-mode .button:hover {
+    background: var(--verde);
+    color: var(--pardo);
+}
+
+body.dark-mode .button.secondary:hover {
+    background: var(--verde);
+    color: var(--pardo);
+}
+
+body.dark-mode .settings-btn:hover {
+    background-color: var(--verde);
+}
+
+/* CORREÇÃO: ícone do settings-btn no tema escuro */
+body.dark-mode .settings-btn:hover i {
+    color: var(--pardo) !important;
+}
+
+/* Botões dos temas */
+body:not(.dark-mode) .mode-btn.light {
+    background: var(--turquesa);
+    border-color: var(--pardo);
+}
+
+body:not(.dark-mode) .mode-btn.dark {
+    background: var(--preto);
+    border-color: var(--branco);
+}
+
+body.dark-mode .mode-btn.light {
+    background: var(--turquesa);
+    border-color: var(--pardo);
+}
+
+body.dark-mode .mode-btn.dark {
+    background: var(--preto);
+    border-color: var(--branco);
+}
+
+/* Estilo para botões iguais (form-actions) */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.btn-igual, .btn-igual.button {
+    width: 460px;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    text-decoration: none;
+    border: 2.75px solid var(--border);
+}
+
+/* Layout geral */
+.pagina-inicial {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Títulos */
+.titulo-principal {
+    font-size: 68px;
+    font-weight: bold;
+}
+
+.titulo-secundario {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.subtitulo {
+    font-size: 20px;
+}
+
+.texto-apoio {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+/* Botão principal */
+.botao-entrar {
+    padding: 15px 40px;
+    font-size: 22px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* ------------------------------------------------------------- */
+/*                     BOTÃO DE RECLAMAÇÕES                      */
+/* ------------------------------------------------------------- */
+.feedback-btn {
+    position: fixed;
+    top: 8px;
+    right: 100px; 
+    background-color: var(--primary);
+    border: 2.75px solid var(--border);
+    border-radius: 8px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    z-index: 1001;
+}
+
+.feedback-btn:hover {
+    transform: scale(1.1) rotate(-15deg);
+    background-color: var(--hover);
+}
+
+.feedback-btn i {
+    font-size: 26px;
+    color: var(--text);
+}
+
+.settings-btn:hover i,
+body:not(.dark-mode) .brightness-btn:hover i,
+body:not(.dark-mode) .font-btn:hover i {
+    color: var(--pardo);
+}
+
+body.dark-mode .brightness-btn:hover,
+body.dark-mode .font-btn:hover,
+body.dark-mode .auth-btn:hover {
+    color: var(--pardo);
+}
+
+body.dark-mode .settings-btn:hover i,
+body.dark-mode .brightness-btn:hover i,
+body.dark-mode .font-btn:hover i,
+body.dark-mode .auth-btn:hover i {
+    color: var(--pardo);
+}
+
+body.dark-mode .feedback-btn:hover i {
+    color: var(--pardo);
+}
+
+body.dark-mode .feedback-btn:hover {
+    border-color: var(--pardo);
+}
+
+body.dark-mode .settings-btn:hover {
+    border-color: var(--pardo);
+}
+
+/* Tema Claro - Hover do botão de reclamações */
+body:not(.dark-mode) .feedback-btn:hover {
+    background: var(--roxo);
+    color: var(--branco);
+}
+
+body:not(.dark-mode) .feedback-btn:hover i {
+    color: var(--branco);
+}
+
+/* Tema Escuro - Hover do botão de reclamações */
+body.dark-mode .feedback-btn:hover {
+    background: var(--verde);
+    color: var(--pardo);
+}
+
+/* ------------------------------------------------------------- */
+/*                     PAINEL DE RECLAMAÇÕES                     */
+/* ------------------------------------------------------------- */
+.feedback-panel {
+    position: fixed;
+    top: 110px;
+    right: 30px;
+    background-color: var(--panel);
+    border: 2.75px solid var(--border);
+    color: var(--text);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    padding: 25px;
+    width: 400px;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.feedback-panel.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+
+.feedback-panel h3 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+/* FORMULÁRIO DE RECLAMAÇÃO */
+.feedback-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 2.75px solid var(--border);
+    border-radius: 6px;
+    background: var(--panel);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-group select {
+    cursor: pointer;
+}
+
+/* BOTÕES DO FORMULÁRIO */
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.form-buttons button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-submit {
+    background: var(--primary);
+    color: var(--text);
+    border: 2.75px solid var(--border) !important;
+}
+
+.btn-cancel {
+    background: var(--verde);
+    color: var(--text);
+    border: 2.75px solid var(--border) !important;
+
+}
+
+body.dark-mode .btn-cancel {
+    background: var(--roxo);
+    color: var(--text);
+    border: 2.75px solid var(--border) !important;
+
+}
+
+.btn-submit:hover {
+    background: var(--hover);
+    color: var(--hover-text);
+}
+
+.btn-cancel:hover {
+    background: var(--hover);
+    color: var(--hover-text);
+}
+
+/* Tema Claro - Hover dos botões do formulário */
+body:not(.dark-mode) .btn-submit:hover,
+body:not(.dark-mode) .btn-cancel:hover {
+    background: var(--roxo);
+    color: var(--branco);
+}
+
+/* Tema Escuro - Hover dos botões do formulário */
+body.dark-mode .btn-submit:hover,
+body.dark-mode .btn-cancel:hover {
+    background: var(--verde);
+    color: var(--pardo);
+}
+
+/* MENSAGEM DE STATUS */
+.status-message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    display: none;
+}
+
+.status-success {
+    background: rgba(72, 187, 120, 0.2);
+    border: 1px solid #48bb78;
+    color: #48bb78;
+}
+
+.status-error {
+    background: rgba(245, 101, 101, 0.2);
+    border: 1px solid #f56565;
+    color: #f56565;
+}
+
+/* LOADING SPINNER */
+.loading-spinner {
+    display: none;
+    border: 3px solid rgba(0,0,0,0.1);
+    border-radius: 50%;
+    border-top: 3px solid var(--primary);
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 10px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsividade para o painel de reclamações */
+@media (max-width: 768px) {
+    .feedback-panel {
+        width: 90%;
+        max-width: 350px;
+        right: 5%;
+        padding: 20px;
+    }
+    
+    .feedback-btn {
+        top: 12px;
+        right: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .feedback-btn {
+        top: 10px;
+        right: 60px;
+        width: 45px;
+        height: 45px;
+    }
+    
+    .feedback-btn i {
+        font-size: 24px;
+    }
+    
+    .feedback-panel {
+        top: 80px;
+        padding: 15px;
+    }
+    
+    .feedback-panel h3 {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 8px;
+        font-size: 0.9em;
+    }
+    
+    .form-buttons button {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+}
+
+/* ------------------------------------------------------------- */
+/*                     BOTÃO "SOBRE NÓS"                         */
+/* ------------------------------------------------------------- */
+.info-icon-container {
+    position: fixed;
+    top: 1175px;
+    left: 40px;
+    z-index: 1002;
+}
+
+.info-icon {
+    background: var(--primary);
+    color: var(--text);
+    border: 2.75px solid var(--border);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.info-icon:hover {
+    transform: scale(1.1);
+    background: var(--hover);
+}
+
+/* Tema Claro - Hover dos botões */
+body:not(.dark-mode) .info-icon:hover,
+body:not(.dark-mode) .feedback-btn:hover {
+    background: var(--roxo);
+    color: var(--mana);
+}
+
+/* Tema Escuro - Hover dos botões */
+body.dark-mode .info-icon:hover,
+body.dark-mode .feedback-btn:hover {
+    background: var(--verde);
+    color: var(--pardo);
+    border-color: var(--pardo);
+}
+
+/* MODAL PERSONALIZADO PARA "SOBRE NÓS" */
+.about-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.about-modal {
+    background-color: var(--panel);
+    border: 2.75px solid var(--border);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    animation: modalFadeIn 0.3s ease;
+    color: var(--text);
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.about-modal-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--primary);
+    border-radius: 10px 10px 0 0;
+}
+
+.about-modal-header h3 {
+    margin: 0;
+    color: var(--text);
+    font-size: 1.4em;
+}
+
+.close-about-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-about-btn:hover {
+    background-color: rgba(0,0,0,0.1);
+    transform: rotate(90deg);
+}
+
+.about-modal-body {
+    padding: 20px;
+}
+
+/* ============================================= */
+/* ESTILOS PARA O MODAL DE LOGIN/CADASTRO */
+/* ============================================= */
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1500;
+}
+
+.modal {
+    background: var(--panel);
+    border: 2.75px solid var(--border);
+    color: var(--text);
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    width: 300px;
+    animation: fadeIn 0.25s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    z-index: 1501;
+    font-size: 1em;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.modal h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--text);
+}
+
+.option-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    margin: 10px 0;
+    border: 2.75px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: block;
+    font-weight: 600;
+    background: var(--primary);
+    color: var(--text);
+}
+
+.option-btn:hover {
+    background: var(--hover);
+    color: var(--hover-text);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+body:not(.dark-mode) .option-btn:hover {
+    background: var(--roxo);
+    color: var(--branco);
+}
+
+body.dark-mode .option-btn:hover {
+    background: var(--verde);
+    color: var(--pardo);
+}
+
+
+
+body:not(.dark-mode) #closeMenu:hover {
+    background: var(--roxo);
+    color: var(--branco);
+}
+
+body.dark-mode #closeMenu:hover {
+    background: var(--verde);
+    color: var(--pardo);
+}
+
+/* Tema Escuro - Bordas pardo em hover de todos os botões */
+body.dark-mode .settings-btn:hover,
+body.dark-mode .brightness-btn:hover,
+body.dark-mode .font-btn:hover,
+body.dark-mode .auth-btn:hover,
+body.dark-mode .feedback-btn:hover,
+body.dark-mode .btn-submit:hover,
+body.dark-mode .btn-cancel:hover,
+body.dark-mode .button:hover,
+body.dark-mode .button.menu-btn:hover,
+body.dark-mode .option-btn:hover,  /* Botões do modal: Entrar, Cadastrar, Cancelar */
+body.dark-mode #closeMenu:hover {  /* Botão de fechar do menu */
+    border-color: var(--pardo) !important;
+}
+
+/* ============================================= */
+/* ESTILOS ESPECÍFICOS DA PÁGINA INICIAL */
+/* ============================================= */
+
+body.pagina-inicial {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.title-1 {
+    font-size: 68px;
+    font-weight: bold;
+    margin: 0;
+    line-height: 60px;
+    color: var(--text);
+}
+
+.subtitle {
+    font-size: 20px;
+    margin-top: 10px;
+    color: var(--text);
+}
+
+.helper {
+    font-size: 18px;
+    margin-top: 5px;
+    margin-bottom: 30px;
+    color: var(--muted);
+}
+
+.main-btn {
+    display: inline-block;
+    padding: 15px 40px;
+    font-size: 22px;
+    border-radius: 10px;
+    background: var(--primary);
+    color: var(--text);
+    font-weight: 600;
+    border: 2.75px solid var(--border);
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+
+.main-btn:hover {
+    background: var(--hover);
+    color: var(--hover-text);
+    transform: scale(1.05);
+}
+
+body:not(.dark-mode) .main-btn:hover {
+    background: var(--roxo);
+    color: var(--branco);
+}
+
+body.dark-mode .main-btn:hover {
+    background: var(--verde);
+    color: var(--pardo);
+    border-color: var(--pardo);
+}
+
+/* ------------------------------------------------------------- */
+/*                     NOVOS BOTÕES ADICIONADOS                  */
+/* ------------------------------------------------------------- */
+
+/* Botão de Formato de Tela */
+.screen-btn {
+    position: fixed;
+    top: 8px;
+    right: 226px; /* Ajustado para ficar ao lado do botão de cursor */
+    background-color: var(--primary);
+    border: 2.75px solid var(--border);
+    border-radius: 8px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    z-index: 1001;
+}
+
+.screen-btn:hover {
+    transform: scale(1.1) rotate(-15deg);
+    background-color: var(--hover);
+}
+
+.screen-btn i {
+    font-size: 26px;
+    color: var(--text);
+}
+
+/* Botão de Cursor do Mouse */
+.cursor-btn {
+    position: fixed;
+    top: 8px;
+    right: 163px; /* Ajustado para ficar ao lado do botão de reclamações */
+    background-color: var(--primary);
+    border: 2.75px solid var(--border);
+    border-radius: 8px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    z-index: 1001;
+}
+
+.cursor-btn:hover {
+    transform: scale(1.1) rotate(15deg);
+    background-color: var(--hover);
+}
+
+.cursor-btn i {
+    font-size: 26px;
+    color: var(--text);
+}
+
+/* Hover dos novos botões no tema claro */
+body:not(.dark-mode) .cursor-btn:hover,
+body:not(.dark-mode) .screen-btn:hover {
+    background: var(--roxo);
+    color: var(--branco);
+}
+
+body:not(.dark-mode) .cursor-btn:hover i,
+body:not(.dark-mode) .screen-btn:hover i {
+    color: var(--branco);
+}
+
+/* Hover dos novos botões no tema escuro */
+body.dark-mode .cursor-btn:hover,
+body.dark-mode .screen-btn:hover {
+    background: var(--verde);
+    color: var(--pardo);
+    border-color: var(--pardo);
+}
+
+body.dark-mode .cursor-btn:hover i,
+body.dark-mode .screen-btn:hover i {
+    color: var(--pardo);
+}
+
+/* ------------------------------------------------------------- */
+/*                 MODAL DE CURSOR DO MOUSE                     */
+/* ------------------------------------------------------------- */
+.cursor-panel {
+    position: fixed;
+    top: 110px;
+    right: 163px; /* Posicionado abaixo do botão de cursor */
+    background-color: var(--panel);
+    border: 2.75px solid var(--border);
+    color: var(--text);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    padding: 25px;
+    width: 380px;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.cursor-panel.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+
+.cursor-panel h3 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+/* Opções de cursor */
+.cursor-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.cursor-type {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 15px 10px;
+    border-radius: 8px;
+    border: 2.75px solid transparent;
+    transition: all 0.3s;
+}
+
+.cursor-type:hover {
+    border-color: var(--primary);
+    background: rgba(255,255,255,0.05);
+}
+
+.cursor-type.active {
+    border-color: var(--hover);
+    background: rgba(0,0,0,0.05);
+}
+
+body.dark-mode .cursor-type.active {
+    background: rgba(255,255,255,0.05);
+}
+
+.cursor-preview {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: var(--text);
+    margin-bottom: 5px;
+}
+
+.cursor-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Controle do círculo no clique */
+.circle-control {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2.75px solid var(--border);
+}
+
+.circle-control h4 {
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.circle-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.circle-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 2.75px solid transparent;
+    transition: all 0.3s;
+}
+
+.circle-option:hover {
+    border-color: var(--primary);
+}
+
+.circle-option.active {
+    border-color: var(--hover);
+    background: rgba(0,0,0,0.05);
+}
+
+body.dark-mode .circle-option.active {
+    background: rgba(255,255,255,0.05);
+}
+
+.circle-preview {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.circle-yes .circle-preview {
+    background-color: var(--primary);
+    border: 2.75px solid var(--border);
+}
+
+.circle-no .circle-preview {
+    background-color: transparent;
+    border: 2.75px dashed var(--border);
+}
+
+/* Estilos para os diferentes tipos de cursor */
+.cursor-preview.default { cursor: default; }
+.cursor-preview.pointer { cursor: pointer; }
+.cursor-preview.text { cursor: text; }
+.cursor-preview.crosshair { cursor: crosshair; }
+.cursor-preview.wait { cursor: wait; }
+.cursor-preview.help { cursor: help; }
+.cursor-preview.move { cursor: move; }
+.cursor-preview.zoom-in { cursor: zoom-in; }
+.cursor-preview.grab { cursor: grab; }
+
+/* ------------------------------------------------------------- */
+/*                MODAL DE FORMATO DE TELA                      */
+/* ------------------------------------------------------------- */
+.screen-panel {
+    position: fixed;
+    top: 110px;
+    right: 226px; /* Posicionado abaixo do botão de tela */
+    background-color: var(--panel);
+    border: 2.75px solid var(--border);
+    color: var(--text);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    padding: 25px;
+    width: 350px;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(20px);
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.screen-panel.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+
+.screen-panel h3 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+/* Opções de formato de tela */
+.screen-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.screen-type {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 15px 10px;
+    border-radius: 8px;
+    border: 2.75px solid transparent;
+    transition: all 0.3s;
+}
+
+.screen-type:hover {
+    border-color: var(--primary);
+    background: rgba(255,255,255,0.05);
+}
+
+.screen-type.active {
+    border-color: var(--hover);
+    background: rgba(0,0,0,0.05);
+}
+
+body.dark-mode .screen-type.active {
+    background: rgba(255,255,255,0.05);
+}
+
+.screen-preview {
+    font-size: 30px;
+    color: var(--text);
+    margin-bottom: 5px;
+}
+
+.screen-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+/* Preview de tela */
+.screen-preview-container {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2.75px solid var(--border);
+}
+
+.preview-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text);
+}
+
+.preview-area {
+    width: 100%;
+    height: 120px;
+    border: 2.75px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+body.dark-mode .preview-area {
+    background: rgba(255,255,255,0.05);
+}
+
+/* Botões dos painéis */
+.panel-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.panel-buttons button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+/* ------------------------------------------------------------- */
+/*                     RESPONSIVIDADE                           */
+/* ------------------------------------------------------------- */
+@media (max-width: 768px) {
+    /* Ajustar posição dos novos botões em telas menores */
+    .screen-btn {
+        top: 12px;
+        right: 70px;
+    }
+    
+    .cursor-btn {
+        top: 12px;
+        right: 130px;
+    }
+    
+    .feedback-btn {
+        top: 12px;
+        right: 190px;
+    }
+    
+    .settings-btn {
+        top: 12px;
+        right: 7px;
+    }
+    
+    /* Ajustar painéis para caber na tela */
+    .cursor-panel,
+    .screen-panel {
+        width: 90%;
+        max-width: 320px;
+        right: 5%;
+    }
+    
+    .cursor-options,
+    .screen-options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .panel-buttons {
+        flex-direction: column;
+    }
+    
+    .feedback-panel {
+        width: 90%;
+        max-width: 350px;
+        right: 5%;
+        padding: 20px;
+    }
+    
+    .theme-settings {
+        width: 90%;
+        max-width: 300px;
+        right: 5%;
+        padding: 20px;
+    }
+    
+    .modal {
+        width: 90%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .screen-btn,
+    .cursor-btn,
+    .feedback-btn,
+    .settings-btn {
+        width: 45px;
+        height: 45px;
+        top: 10px;
+    }
+    
+    .screen-btn i,
+    .cursor-btn i,
+    .feedback-btn i,
+    .settings-btn i {
+        font-size: 24px;
+    }
+    
+    .screen-btn {
+        right: 60px;
+    }
+    
+    .cursor-btn {
+        right: 115px;
+    }
+    
+    .feedback-btn {
+        right: 170px;
+    }
+    
+    .settings-btn {
+        right: 5px;
+    }
+    
+    .cursor-panel,
+    .screen-panel {
+        top: 80px;
+        padding: 15px;
+    }
+    
+    .cursor-panel h3,
+    .screen-panel h3 {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+    
+    .cursor-options,
+    .screen-options {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .title-1 {
+        font-size: 48px;
+    }
+    .main-btn {
+        padding: 12px 30px;
+        font-size: 18px;
+    }
+    
+    .brightness-btn,
+    .font-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+}
     </style>
 </head>
 <body class="pagina-inicial">
+
+
+    
+    <!-- Botão de Cursor do Mouse -->
+    <button class="cursor-btn" id="cursorToggle" title="Configurar Cursor do Mouse">
+        <i class="fas fa-mouse-pointer"></i>
+    </button>
 
     <!-- Botão de Reclamações/Sugestões -->
     <button class="feedback-btn" id="feedbackToggle" title="Enviar Reclamação/Sugestão">
@@ -987,16 +2010,126 @@
     </button>
 
     <!-- TÍTULO -->
-    <div class="logo-container">
-        <div class="logo-icon"></div>
-        <h1 class="title-1">Agromail</h1>
-    </div>
+<div class="logo-container" style="margin-top: -40px;"> 
+    <!-- AUMENTE OU DIMINUA este margin-top para mover o título AgroMail -->
+    <div class="logo-icon"></div>
+    <h1 class="title-1" 
+        style="font-size: 80px;  /* AQUI você aumenta ou diminui a fonte */">
+        AgroMail
+    </h1>
+</div>
 
-    <p class="subtitle">Seja bem-vindo(a) ao Agromail.</p>
-    <p class="helper">Como podemos te ajudar hoje?</p>
+<p class="subtitle" 
+   style="font-size: 20px; 
+          margin-top: 80px;  /* AQUI você move o texto para cima/baixo */
+          margin-left: 10px;">
+   <strong><em>"Seja bem-vindo(a)! Desejamos que seu dia seja leve, produtivo e cheio de conquistas.<br>
+   Estamos aqui e à disposição para tornar seu dia mais fácil."</em></strong>
+</p>
+
+<p class="helper"
+   style="font-size: 20px; 
+          margin-top: 35px;  /* AQUI você move o texto para cima/baixo */
+          margin-left: 0px;">
+   <strong>Para mais experiências<br>clique abaixo<br>👇</strong>
+</p>
+
 
     <!-- Botão central -->
-    <button class="main-btn" id="openMenu">Entrar</button>
+     <div style="text-align: center; margin-top: -20px;"> 
+    <button title="Clique aqui para acessar a ferramenta" class="main-btn" id="openMenu">Entrar</button>
+
+
+    <!-- MODAIS DOS NOVOS BOTÕES -->
+    
+    <!-- Modal de Cursor do Mouse -->
+    <div class="cursor-panel" id="cursorPanel">
+        <h3>CONFIGURAR CURSOR DO MOUSE</h3>
+        
+        <div class="cursor-section">
+            <h4>Escolha o Tipo de Cursor</h4>
+            <div class="cursor-options" id="cursorOptions">
+                <!-- Cursor padrão -->
+                <div class="cursor-type" data-cursor="default">
+                    <div class="cursor-preview default">
+                        <i class="fas fa-arrow-pointer"></i>
+                    </div>
+                    <div class="cursor-name">Padrão</div>
+                </div>
+                
+                <!-- Cursor de ponteiro -->
+                <div class="cursor-type" data-cursor="pointer">
+                    <div class="cursor-preview pointer">
+                        <i class="fas fa-hand-point-up"></i>
+                    </div>
+                    <div class="cursor-name">Ponteiro</div>
+                </div>
+                
+                <!-- Cursor de texto -->
+                <div class="cursor-type" data-cursor="text">
+                    <div class="cursor-preview text">
+                        <i class="fas fa-i-cursor"></i>
+                    </div>
+                    <div class="cursor-name">Texto</div>
+                </div>
+                
+                <!-- Cursor de mira -->
+                <div class="cursor-type" data-cursor="crosshair">
+                    <div class="cursor-preview crosshair">
+                        <i class="fas fa-crosshairs"></i>
+                    </div>
+                    <div class="cursor-name">Mira</div>
+                </div>
+                
+                <!-- Cursor de espera -->
+                <div class="cursor-type" data-cursor="wait">
+                    <div class="cursor-preview wait">
+                        <i class="fas fa-spinner"></i>
+                    </div>
+                    <div class="cursor-name">Espera</div>
+                </div>
+                
+                <!-- Cursor de ajuda -->
+                <div class="cursor-type" data-cursor="help">
+                    <div class="cursor-preview help">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="cursor-name">Ajuda</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="circle-control">
+            <h4>Círculo no Clique do Mouse</h4>
+            <p class="circle-description" style="font-size: 0.9rem; margin-bottom: 15px; color: var(--muted);">
+                Mostra um círculo animado quando você clica em qualquer elemento
+            </p>
+            <div class="circle-toggle">
+                <div class="circle-option circle-yes active" id="circleYes">
+                    <div class="circle-preview">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="circle-name">Ativado</div>
+                </div>
+                <div class="circle-option circle-no" id="circleNo">
+                    <div class="circle-preview">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="circle-name">Desativado</div>
+                </div>
+            </div>
+            <div class="circle-colors" style="margin-top: 15px; font-size: 0.85rem; color: var(--muted);">
+                <p><strong>Cores do círculo:</strong> Branco (#fff) no tema escuro • Laranja (#cc6600) no tema claro</p>
+            </div>
+        </div>
+        
+        <div class="panel-buttons">
+            <button class="btn-submit" id="applyCursor">Aplicar Configurações</button>
+            <button class="btn-cancel" id="cancelCursor">Cancelar</button>
+        </div>
+    </div>
+    
+
 
     <!-- Modal de Login/Cadastro -->
     <div class="overlay" id="menuOverlay">
@@ -1075,27 +2208,18 @@
         </div>
         
         <div class="brightness-control">
-            <h5>CONTROLE DE BRILHO</h5>
-            <div class="brightness-slider-container">
-                <button class="brightness-btn" id="brightnessDecrease">-</button>
-                <input type="range" min="50" max="150" value="100" class="brightness-slider" id="brightnessSlider">
-                <button class="brightness-btn" id="brightnessIncrease">+</button>
-            </div>
-            <div class="brightness-value">
-                <i class="fas fa-sun brightness-icon"></i>
-                <span id="brightnessValue">Brilho: 100%</span>
-            </div>
-        </div>
+    <h5>CONTROLE DE BRILHO</h5>
+    <div class="brightness-slider-container">
+        <button class="brightness-btn" id="brightnessDecrease">-</button>
+        <input type="range" min="50" max="150" value="100" class="brightness-slider" id="brightnessSlider">
+        <button class="brightness-btn" id="brightnessIncrease">+</button>
+    </div>
+    <div class="brightness-value">
+        <i class="fas fa-sun brightness-icon"></i>
+        <span id="brightnessValue">Brilho: 100%</span>
+    </div>
+</div>
 
-        <div class="font-control">
-            <h5>CONTROLE DE FONTE</h5>
-            <div class="font-control-container">
-                <button class="font-btn" id="fontDecrease">A-</button>
-                <button class="font-btn" id="fontIncrease">A+</button>
-            </div>
-            <div class="font-value">
-                <i class="fas fa-font font-icon"></i>
-                <span id="fontValue">Tamanho: 100%</span>
             </div>
         </div>
 
@@ -1581,6 +2705,267 @@
             updateFontDisplay();
             applyFontSize();
         }
+        
+        // ============================================
+        // CONTROLES DOS NOVOS BOTÕES
+        // ============================================
+        
+        // Controles do botão de cursor do mouse
+        const cursorToggle = document.getElementById("cursorToggle");
+        const cursorPanel = document.getElementById("cursorPanel");
+        const cancelCursor = document.getElementById("cancelCursor");
+        const applyCursor = document.getElementById("applyCursor");
+        const cursorOptions = document.querySelectorAll(".cursor-type");
+        const circleYes = document.getElementById("circleYes");
+        const circleNo = document.getElementById("circleNo");
+        
+        // Controles do botão de formato de tela
+        const screenToggle = document.getElementById("screenToggle");
+        const screenPanel = document.getElementById("screenPanel");
+        const cancelScreen = document.getElementById("cancelScreen");
+        const applyScreen = document.getElementById("applyScreen");
+        const screenOptions = document.querySelectorAll(".screen-type");
+        const previewArea = document.getElementById("previewArea");
+        
+        // Estado atual das configurações
+        let currentCursorType = localStorage.getItem("cursorType") || "default";
+        let circleEnabled = localStorage.getItem("circleEnabled") !== "false"; // true por padrão
+        let currentScreenFormat = localStorage.getItem("screenFormat") || "pc";
+        
+        // ============================================
+        // FUNÇÕES PARA O CURSOR DO MOUSE
+        // ============================================
+        
+        // Inicializar configurações salvas do cursor
+        function loadCursorSettings() {
+            // Definir cursor ativo
+            cursorOptions.forEach(option => {
+                if (option.dataset.cursor === currentCursorType) {
+                    option.classList.add("active");
+                } else {
+                    option.classList.remove("active");
+                }
+            });
+            
+            // Definir círculo ativo
+            if (circleEnabled) {
+                circleYes.classList.add("active");
+                circleNo.classList.remove("active");
+            } else {
+                circleYes.classList.remove("active");
+                circleNo.classList.add("active");
+            }
+            
+            // Aplicar cursor atual
+            applyCursorToBody();
+        }
+        
+        // Aplicar cursor ao body
+        function applyCursorToBody() {
+            document.body.style.cursor = currentCursorType;
+            
+            // Se circleEnabled for true, adicionar evento de clique para mostrar círculo
+            if (circleEnabled) {
+                document.addEventListener('click', showClickCircle);
+            } else {
+                document.removeEventListener('click', showClickCircle);
+            }
+        }
+        
+        // Mostrar círculo no clique
+        function showClickCircle(e) {
+            // Criar elemento do círculo
+            const circle = document.createElement('div');
+            circle.style.position = 'fixed';
+            circle.style.width = '40px';
+            circle.style.height = '40px';
+            circle.style.borderRadius = '50%';
+            circle.style.pointerEvents = 'none';
+            circle.style.zIndex = '9999';
+            circle.style.transform = 'translate(-50%, -50%)';
+            circle.style.animation = 'clickCircle 0.5s ease-out forwards';
+            
+            // Definir cor baseada no tema
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            if (isDarkMode) {
+                circle.style.backgroundColor = '#fff'; // Branco no tema escuro
+                circle.style.border = '2px solid #fff';
+            } else {
+                circle.style.backgroundColor = '#cc6600'; // Laranja no tema claro
+                circle.style.border = '2px solid #cc6600';
+            }
+            
+            // Posicionar onde foi clicado
+            circle.style.left = `${e.clientX}px`;
+            circle.style.top = `${e.clientY}px`;
+            
+            // Adicionar ao body
+            document.body.appendChild(circle);
+            
+            // Remover após animação
+            setTimeout(() => {
+                circle.remove();
+            }, 500);
+        }
+        
+        // Estilo para a animação do círculo
+        const circleStyle = document.createElement('style');
+        circleStyle.textContent = `
+            @keyframes clickCircle {
+                0% {
+                    transform: translate(-50%, -50%) scale(0);
+                    opacity: 0.8;
+                }
+                100% {
+                    transform: translate(-50%, -50%) scale(2);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(circleStyle);
+        
+        // Abrir/fechar painel de cursor
+        if (cursorToggle && cursorPanel) {
+            cursorToggle.onclick = (e) => {
+                e.stopPropagation();
+                loadCursorSettings(); // Carregar configurações salvas
+                cursorPanel.classList.toggle("active");
+                // Fechar outros painéis
+                closeAllPanelsExcept('cursor');
+            };
+        }
+        
+        // Fechar painel de cursor
+        if (cancelCursor) {
+            cancelCursor.onclick = () => {
+                cursorPanel.classList.remove("active");
+            };
+        }
+        
+        // Selecionar tipo de cursor
+        cursorOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                cursorOptions.forEach(opt => opt.classList.remove("active"));
+                option.classList.add("active");
+                currentCursorType = option.dataset.cursor;
+                
+                // Aplicar cursor à prévia
+                option.querySelector('.cursor-preview').style.cursor = currentCursorType;
+            });
+        });
+        
+        // Selecionar opção de círculo
+        if (circleYes && circleNo) {
+            circleYes.addEventListener('click', () => {
+                circleYes.classList.add("active");
+                circleNo.classList.remove("active");
+                circleEnabled = true;
+            });
+            
+            circleNo.addEventListener('click', () => {
+                circleYes.classList.remove("active");
+                circleNo.classList.add("active");
+                circleEnabled = false;
+            });
+        }
+        
+        // Aplicar configurações do cursor
+        if (applyCursor) {
+            applyCursor.addEventListener('click', () => {
+                // Salvar configurações
+                localStorage.setItem("cursorType", currentCursorType);
+                localStorage.setItem("circleEnabled", circleEnabled);
+                
+                // Aplicar configurações
+                applyCursorToBody();
+                
+                // Fechar painel
+                cursorPanel.classList.remove("active");
+                
+                // Mostrar feedback visual
+                showTemporaryMessage("Configurações do cursor aplicadas!", "success");
+            });
+        }
+        
+       
+        // ============================================
+        // FUNÇÕES AUXILIARES
+        // ============================================
+        
+        // Fechar todos os painéis exceto um específico
+        function closeAllPanelsExcept(except) {
+            const panels = {
+                'cursor': cursorPanel,
+                'screen': screenPanel,
+                'feedback': feedbackPanel,
+                'theme': themePanel
+            };
+            
+            for (const [key, panel] of Object.entries(panels)) {
+                if (key !== except && panel) {
+                    panel.classList.remove("active");
+                }
+            }
+            
+            // Fechar modais também
+            if (aboutOverlay) aboutOverlay.style.display = 'none';
+            if (overlay) overlay.style.display = 'none';
+        }
+        
+        // Mostrar mensagem temporária
+        function showTemporaryMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = message;
+            messageDiv.style.position = 'fixed';
+            messageDiv.style.top = '20px';
+            messageDiv.style.right = '20px';
+            messageDiv.style.padding = '12px 20px';
+            messageDiv.style.borderRadius = '8px';
+            messageDiv.style.zIndex = '2000';
+            messageDiv.style.fontWeight = '600';
+            messageDiv.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            
+            if (type === 'success') {
+                messageDiv.style.backgroundColor = '#48bb78';
+                messageDiv.style.color = 'white';
+            } else {
+                messageDiv.style.backgroundColor = '#f56565';
+                messageDiv.style.color = 'white';
+            }
+            
+            document.body.appendChild(messageDiv);
+            
+            // Remover após 3 segundos
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+        
+        // Fechar painel de cursor com tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (cursorPanel && cursorPanel.classList.contains('active')) {
+                    cursorPanel.classList.remove("active");
+                }
+                if (screenPanel && screenPanel.classList.contains('active')) {
+                    screenPanel.classList.remove("active");
+                }
+            }
+        });
+        
+        // Inicializar ao carregar a página
+        window.addEventListener('load', () => {
+            // Carregar configurações do cursor
+            loadCursorSettings();
+            
+            // Carregar configurações de tela
+            loadScreenSettings();
+            
+            // Aplicar formato de tela salvo
+            if (currentScreenFormat) {
+                document.body.classList.add('screen-' + currentScreenFormat);
+            }
+        });
     });
 </script>
 
