@@ -1,5 +1,17 @@
 # projetoAgromailDeJoaoMarcosEGabrielleRiboli
 
+Primeiro método de download
+
+Crie uma pasta no gerenciador de arquivos
+
+Agora abra ela no vs studio code
+
+Digite Ctrl + k e depois Ctrl + o
+
+Selecione ela, após isto
+
+digite então git clone
+
 Abra o terminal do VS Studio Code pelo seguinte atalho:
 
 Ctrl + `
