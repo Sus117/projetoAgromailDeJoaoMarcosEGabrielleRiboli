@@ -4,13 +4,13 @@ Primeiro método de download:
 
 Crie uma pasta no gerenciador de arquivos
 
-Agora abra ela no vs studio code:
+Agora abra ela no VS Studio Code:
 
 Digite Ctrl + k e depois Ctrl + o
 
 Agora abra o terminal;
 
-Após selecione a pasta, e com o terminal aberto isto digite então:
+Após selecione a pasta, e com o terminal aberto digite isto então:
 
 clone https://github.com/Sus117/projetoAgromailDeJoaoMarcosEGabrielleRiboli.git
 
@@ -21,13 +21,13 @@ Segundo método de download:
 
 Clique em um botão verde chamado Code
 
-Clique em DownloadZip
+Clique em Download ZIP
 
 Após aguardar o download finalizar
 
-Extraia o arquivo o arquivo dentro do gerenciador de arquivos
+Extraia esta pasta dentro do gerenciador de arquivos
 
-Agora abra este mesmo arquivo no vs studio code:
+Agora abra esta mesma pasta no VS Studio Code:
 
 Digite Ctrl + k e depois Ctrl + o
 
