@@ -30,9 +30,7 @@ Agora abra ela no vs studio code:
 
 Digite Ctrl + k e depois Ctrl + o
 
-Abra o terminal do VS Studio Code pelo seguinte atalho:
-
-Ctrl + `
+Abra o terminal do VS Studio Code
 -----------------------------------------------------------------
 Segunda Etapa - Rodar o arquivo baixado
 -----------------------------------------------------------------
