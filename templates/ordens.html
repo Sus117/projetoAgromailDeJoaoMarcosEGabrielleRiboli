@@ -49,6 +49,7 @@
        <!-- ÍCONE DE MENU (lado esquerdo) -->
   <a href="{{ url_for('index') }}" 
    id="menu-icon"
+   title="Este botão retorna a tela primária"
    style="
      display: inline-block;
      background-color: transparent;
@@ -61,13 +62,14 @@
      transition: 0.2s;
      font-weight: bold;
    "
-   onmouseover="this.style.color = document.body.classList.contains('dark-mode') ? '#cc6600' : '#fff'"
+   onmouseover="this.style.color = document.body.classList.contains('dark-mode') ? '#cc6600' : '##cc6600'"
    onmouseout="this.style.color = document.body.classList.contains('dark-mode') ? '#fff' : '#cc6600'">
   <i class="fa fa-bars"></i>
 </a>
 
   <!-- BOTÃO 1 -->
   <a href="{{ url_for('ordens') }}" class="botao"
+  tittle = "Clique para ir á página de abertura de ordens"
      style="
        display: inline-block;
        background-color: #ccff33;
@@ -84,6 +86,7 @@
 
   <!-- BOTÃO 2 -->
   <a href="{{ url_for('ordens_minhas') }}" class="botao"
+  tittle = "Clique para vizualizar as ordens recentemente criadas por você"
      style="
        display: inline-block;
        background-color: #ccff33;
